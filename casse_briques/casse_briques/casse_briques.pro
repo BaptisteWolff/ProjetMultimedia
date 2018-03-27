@@ -20,9 +20,7 @@ TARGET 	  = CasseBriques
 # fichiers sources/headers
 SOURCES	+= main.cpp \
     cassebriques.cpp \
-    palet.cpp \
-    balle.cpp
+    palet.cpp
 HEADERS += \
     cassebriques.h \
-    palet.h \
-    balle.h
+    palet.h
