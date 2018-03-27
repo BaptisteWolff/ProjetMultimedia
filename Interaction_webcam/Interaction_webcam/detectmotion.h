@@ -20,7 +20,7 @@ public:
     void detect(Mat frame);
     Mat getFrame(){return frame2;}
     void setFirstFrame(Mat frame);
-    //Point getVect(){return vect;}
+    Point getVect(){return vect;}
 
 private:
     int frameWidth=320;
@@ -41,7 +41,7 @@ private:
     int result_rows = frame1.rows-templateHeight + 1;
 
     // result
-    //Point vect;
+    Point vect;
 };
 
 #endif // DETECTMOTION_H

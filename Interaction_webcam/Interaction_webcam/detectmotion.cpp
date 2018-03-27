@@ -41,16 +41,14 @@ void DetectMotion::detect(Mat frame){
     double minVal; double maxVal; Point minLoc; Point maxLoc;
     minMaxLoc( resultImage, &minVal, &maxVal, &minLoc, &maxLoc);
     // Compute the translation vector between the origin and the matching rect
-    Point vect(maxLoc.x-templateRect.x,maxLoc.y-templateRect.y);
+    vect = Point(maxLoc.x-templateRect.x,maxLoc.y-templateRect.y);
 
     // Draw green rectangle and the translation vector
     rectangle(frame2,workingRect,Scalar( 0, 255, 0),2);
     Point p(workingCenter.x+vect.x,workingCenter.y+vect.y);
     arrowedLine(frame2,workingCenter,p,Scalar(255,255,255),2);
-
     // Display frame2
     //imshow("WebCam", frame2);
-
     // Swap matrixes
     swap(frameRect1,frameRect2);
 }
