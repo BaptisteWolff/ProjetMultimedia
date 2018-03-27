@@ -36,7 +36,7 @@ protected:
 private:
 
     Palet palet;
-    Balle balle = Balle(0.0,0.0,1,1,1);
+    Balle balle;
 };
 
 #endif // MYGLWIDGET_H
