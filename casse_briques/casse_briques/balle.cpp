@@ -4,6 +4,7 @@
 #include <QFile>
 
 // Constructeur :
+/*
 Balle::Balle(float x, float y, float z, int speed, float xdirection, float ydirection, float zdirection)
 {
     x_ = x;
@@ -13,7 +14,7 @@ Balle::Balle(float x, float y, float z, int speed, float xdirection, float ydire
     xdirection_ = xdirection;
     ydirection_ = ydirection;
     zdirection_ = zdirection;
-}
+}*/
 Balle::Balle(float x, float y, int speed, float xdirection, float ydirection)
 {
     x_ = x;
