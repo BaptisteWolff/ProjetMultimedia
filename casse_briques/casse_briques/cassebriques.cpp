@@ -50,7 +50,7 @@ void CasseBriques::initializeGL()
 
     // Activation du zbuffer
    glEnable(GL_DEPTH_TEST);
-    balle = Balle(0.0,0.0,1,1,1);
+
    // Active les textures 2D
    //glEnable(GL_TEXTURE_2D);
 }
@@ -97,7 +97,10 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
         // Changement de couleur du fond
         case Qt::Key_B:
         {
-            balle.moveBall();
+            float R = rand() / (float)RAND_MAX;
+            float G = rand() / (float)RAND_MAX;
+            float B = rand() / (float)RAND_MAX;
+            glClearColor(R, G, B, 1.0);
             break;
         }
 

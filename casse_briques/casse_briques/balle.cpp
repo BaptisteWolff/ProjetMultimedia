@@ -4,7 +4,7 @@
 #include <QFile>
 
 // Constructeur :
-Balle::balle(float x, float y, float z, int speed, float xdirection, float ydirection, float zdirection)
+balle::balle(float x, float y, float z, int speed, float xdirection, float ydirection)
 {
     x_ = x;
     y_ = y;
@@ -12,9 +12,8 @@ Balle::balle(float x, float y, float z, int speed, float xdirection, float ydire
     speed_ = speed;
     xdirection_ = xdirection;
     ydirection_ = ydirection;
-    zdirection_ = zdirection;
 }
-Balle::balle(float x, float y, int speed, float xdirection, float ydirection)
+balle::balle(float x, float y, int speed, float xdirection, float ydirection)
 {
     x_ = x;
     y_ = y;
@@ -24,21 +23,15 @@ Balle::balle(float x, float y, int speed, float xdirection, float ydirection)
     ydirection_ = ydirection;
 }
 // Destructeur :
-Balle::~balle()
+balle::~balle()
 {
     // Destruction des quadriques
     gluDeleteQuadric(ball);
 }
 
-Balle::drawnBall(){
-    // Affichage de la quadrique
-    ball = gluNewQuadric();
-    glTranslatef(x_, y_, z_); // On lui applique une translation
-    glColor3f(0.0, 0.0, 1.0); // On définit la couleur courante comme étant bleue
-    gluSphere(ball, sizeball, 32, 32); // On dessine une sphère
+balle::drawnBall(){
+
 }
-Balle::moveBall(){
-    x_ += xdirection_*speed_;
-    y_ += ydirection_*speed_;
-    z_ += zdirection_*speed_;
+balle::moveBall(){
+
 }

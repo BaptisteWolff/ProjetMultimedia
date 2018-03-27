@@ -7,7 +7,7 @@
 #include <QVector2D>
 
 #include "palet.h"
-#include "balle.h"
+
 
 // Classe dediee a l'affichage d'une scene OpenGL
 class CasseBriques : public QGLWidget
@@ -36,7 +36,7 @@ protected:
 private:
 
     Palet palet;
-    Balle balle;
+
 };
 
 #endif // MYGLWIDGET_H
