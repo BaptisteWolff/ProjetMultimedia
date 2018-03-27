@@ -67,11 +67,11 @@ void MainWindow::webcamCapture()
             ui->label_webcam->resize(ui->label_webcam->pixmap()->size());
 
             // Sphere translation
-            /*Point vect = detectMotion.getVect();
+            Point vect = detectMotion.getVect();
             if (vect.x > 5 && vect.y > 5)
             {
-                //ui->openGl->translateSphere(vect.x, vect.y, 0);
-            }*/
+                ui->openGl->translateSphere(vect.x, vect.y, 0);
+            }
         }
         else
         {
