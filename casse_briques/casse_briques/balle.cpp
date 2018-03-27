@@ -4,7 +4,7 @@
 #include <QFile>
 
 // Constructeur :
-Balle::balle(float x, float y, float z, int speed, float xdirection, float ydirection, float zdirection)
+Balle::Balle(float x, float y, float z, int speed, float xdirection, float ydirection, float zdirection)
 {
     x_ = x;
     y_ = y;
@@ -14,7 +14,7 @@ Balle::balle(float x, float y, float z, int speed, float xdirection, float ydire
     ydirection_ = ydirection;
     zdirection_ = zdirection;
 }
-Balle::balle(float x, float y, int speed, float xdirection, float ydirection)
+Balle::Balle(float x, float y, int speed, float xdirection, float ydirection)
 {
     x_ = x;
     y_ = y;
@@ -24,7 +24,7 @@ Balle::balle(float x, float y, int speed, float xdirection, float ydirection)
     ydirection_ = ydirection;
 }
 // Destructeur :
-Balle::~balle()
+Balle::~Balle()
 {
     // Destruction des quadriques
     gluDeleteQuadric(ball);
