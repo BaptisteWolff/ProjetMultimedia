@@ -5,12 +5,15 @@ Palet::Palet()
 
 }
 
-Palet::Display()
+void Palet::draw()
 {
 
     glPushMatrix();
 
-    glEnd();
+    glColor3f(r, g, b);
+    glRotatef(90, 0, 1, 0);
+    glTranslatef(x, y, z);
+    gluCylinder(quadric, radius, radius, length, 100, 1);
 
     glPopMatrix();
 }

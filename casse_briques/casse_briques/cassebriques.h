@@ -6,6 +6,8 @@
 #include <QColor>
 #include <QVector2D>
 
+#include "palet.h"
+
 
 // Classe dediee a l'affichage d'une scene OpenGL
 class CasseBriques : public QGLWidget
@@ -33,7 +35,7 @@ protected:
 
 private:
 
-    // Quelques variables a definir
+    Palet palet;
 
 };
 

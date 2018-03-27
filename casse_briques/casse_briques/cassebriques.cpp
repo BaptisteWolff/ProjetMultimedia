@@ -6,8 +6,7 @@
 // Declarations des constantes
 const unsigned int WIN_WIDTH  = 1600;
 const unsigned int WIN_HEIGHT = 900;
-const float ASPECT_RATIO      = static_cast<float>(WIN_WIDTH) / WIN_HEIGHT;
-const float ORTHO_DIM         = 50.0f;
+const float MAX_DIMENSION     = 50.0f;
 
 bool triangle = true;
 bool primitive = true;
@@ -48,6 +47,12 @@ void CasseBriques::initializeGL()
 {
     // Reglage de la couleur de fond
     glClearColor(0.5, 0.5, 0.5, 1.0);
+
+    // Activation du zbuffer
+   glEnable(GL_DEPTH_TEST);
+
+   // Active les textures 2D
+   //glEnable(GL_TEXTURE_2D);
 }
 
 
@@ -55,13 +60,15 @@ void CasseBriques::initializeGL()
 void CasseBriques::resizeGL(int width, int height)
 {
     // Definition du viewport (zone d'affichage)
+    glViewport(0, 0, width, height);
 
     // Definition de la matrice de projection
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-ORTHO_DIM * ASPECT_RATIO, ORTHO_DIM * ASPECT_RATIO, -ORTHO_DIM, ORTHO_DIM, -2.0f * ORTHO_DIM, 2.0f * ORTHO_DIM);
 
-    // Definition de la matrice de modele
+    if(width != 0)
+        glOrtho(-MAX_DIMENSION, MAX_DIMENSION, -MAX_DIMENSION * height / static_cast<float>(width), MAX_DIMENSION * height / static_cast<float>(width), -MAX_DIMENSION * 2.0f, MAX_DIMENSION * 2.0f);
+
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
@@ -70,75 +77,15 @@ void CasseBriques::resizeGL(int width, int height)
 // Fonction d'affichage
 void CasseBriques::paintGL()
 {
-    // Reinitialisation du tampon de couleur
-    glClear(GL_COLOR_BUFFER_BIT);
-    glViewport(0,0,width(),height());
-    // Reinitialisation de la matrice courante
-    glMatrixMode(GL_PROJECTION);
+    // Reinitialisation des tampons
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Definition de la position de la camera
     glLoadIdentity();
-    glOrtho(0.0, 1.6, 0.0, 0.9, -1.0, 1.0);
-
-    // Reglage de la couleur
-    glColor3ub(r1, g1, b1);
-
-    glTranslatef(X+0.8, Y+0.45, Z);
-
-    glRotatef(angle, 0, 0, 1);
+    gluLookAt(0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
     // Debut de l'affichage
-    if(primitive)
-    {
-        glEnableClientState(GL_VERTEX_ARRAY); // Active le tableau permettant de définir les vertices
-        glEnableClientState(GL_COLOR_ARRAY);
-        GLfloat vertices[] = { 0.3*cos(2*M_PI/3), 0.3*sin(2*M_PI/3), // triangle
-                               0.3*cos(4*M_PI/3), 0.3*sin(4*M_PI/3),
-                               0.3*cos(6*M_PI/3), 0.3*sin(6*M_PI/3),
-                               -0.25, -0.25, // rectangle
-                               -0.25, 0.25,
-                               0.25, 0.25,
-                               0.25, -0.25
-                             };
-        GLfloat colors[] = {r1, g1, b1,
-                            r2, g2, b2,
-                            r3, g3 ,b3,
-                            r1, g1, b1,
-                            r2, g2, b2,
-                            r3, g3 ,b3,
-                            r4, g4, b4};
-
-
-        glColorPointer(3, GL_FLOAT, 0, colors);
-        glVertexPointer(2, GL_FLOAT, 0, vertices); // 2 coordonnées pour chaque vertex
-
-        if (triangle)
-        {
-            glDrawArrays(GL_TRIANGLES, 0, 3); // Dessine 1 triangle ayant 3 vertices
-
-            /*glBegin(GL_TRIANGLES); // Primitive à afficher et début de la déclaration des vertices de cette primitive
-            glVertex2f(0.3*cos(2*M_PI/3), 0.3*sin(2*M_PI/3));
-            glColor3ub(r2, g2, b2);
-            glVertex2f(0.3*cos(4*M_PI/3), 0.3*sin(4*M_PI/3));
-            glColor3ub(r3, g3, b3);
-            glVertex2f(0.3*cos(6*M_PI/3), 0.3*sin(6*M_PI/3));
-            glEnd(); // Fin de la déclaration*/
-        }
-        else
-        {
-            glDrawArrays(GL_QUADS, 3, 4);
-
-            /*glBegin(GL_QUADS);
-            glVertex2f(-0.25,-0.25);
-            glColor3ub(r2, g2, b2);
-            glVertex2f(-0.25,0.25);
-            glColor3ub(r3, g3, b3);
-            glVertex2f(0.25,0.25);
-            glColor3ub(r4, g4, b4);
-            glVertex2f(0.25,-0.25);
-            glEnd();*/
-        }
-
-        glDisableClientState(GL_VERTEX_ARRAY); // Désactive le tableau
-    }
+    palet.draw();
 }
 
 
