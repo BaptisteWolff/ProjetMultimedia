@@ -36,7 +36,7 @@ protected:
 private:
 
     Palet palet;
-
+    GLfloat xPalet = 0; // Position du palet
 };
 
 #endif // MYGLWIDGET_H

@@ -81,10 +81,12 @@ void CasseBriques::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Definition de la position de la camera
+    glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
     // Debut de l'affichage
+    palet.setX(X);
     palet.draw();
 }
 
@@ -159,13 +161,13 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 
         case Qt::Key_Left:
         {
-            X-=0.01;
+            X-=1;
             break;
         }
 
         case Qt::Key_Right:
         {
-            X+=0.01;
+            X+=1;
             break;
         }
 
