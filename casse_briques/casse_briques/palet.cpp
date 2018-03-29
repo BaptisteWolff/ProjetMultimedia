@@ -29,9 +29,9 @@ cv::Point2f Palet::getDir(Balle ball)
         float xMin = ball.getX() - radius;
         float xMax = ball.getX() + radius;
 
-        if ((_x <= xMin) && ((_x + _length) >= xMax))
+        if ((_x <= xMax) && ((_x + _length) >= xMin))
         {
-            float xDir = ball.getXDir() * 2* ((ball.getX() - (_x + _length / 2)) / _length);
+            float xDir = 2 * (ball.getX() - _x - _length/2) / _length;
             if (xDir > 0.9){
                 xDir = 0.9;
             }

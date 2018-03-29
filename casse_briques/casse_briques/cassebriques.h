@@ -39,7 +39,7 @@ protected:
 private:
     float fps = 60;
     Palet palet;
-    Balle balle = Balle(-2,3,10/fps,1,-1);
+    Balle balle = Balle(0,15,20/fps,0,-1);
     Wall upperWall;
     Wall rightWall;
     Wall leftWall;
