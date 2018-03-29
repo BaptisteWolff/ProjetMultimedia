@@ -8,6 +8,7 @@ class Palet
 public:
     Palet();
     void draw();
+    void setX(float x){this->x = x - length/2;}
 
 private:
     // Taille du palet
@@ -15,7 +16,7 @@ private:
     float radius = 0.6;
 
     // Position du palet
-    float x = -length / 2;
+    float x = length/2;
     float y = -20;
     float z = 0;
 
@@ -24,7 +25,7 @@ private:
     float g = 196.0/255;
     float b = 236.0/255;
 
-     GLUquadric* quadric = gluNewQuadric();
+    GLUquadric* quadric = gluNewQuadric();
 };
 
 #endif // PALET_H

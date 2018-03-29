@@ -37,7 +37,11 @@ protected:
 private:
 
     Palet palet;
+<<<<<<< HEAD
     Balle balle = Balle(0,0,1,1,1);
+=======
+    GLfloat xPalet = 0; // Position du palet
+>>>>>>> 3e9a0adce101a7b7a2bae95eccc9b2dccd60a291
 };
 
 #endif // MYGLWIDGET_H
