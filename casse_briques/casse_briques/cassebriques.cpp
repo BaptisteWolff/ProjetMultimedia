@@ -39,6 +39,10 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     // Reglage de la taille/position
     setFixedSize(WIN_WIDTH, WIN_HEIGHT);
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
+    timer->start(1000/fps);
 }
 
 
@@ -186,5 +190,12 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 
     // Acceptation de l'evenement et mise a jour de la scene
     event->accept();
+    updateGL();
+}
+
+void CasseBriques::timeUpdate()
+{
+    balle.moveBall();
+    balle.changeDirection(palet.getDir(balle));
     updateGL();
 }

@@ -8,6 +8,7 @@
 
 #include "palet.h"
 #include "balle.h"
+#include "QTimer"
 
 
 // Classe dediee a l'affichage d'une scene OpenGL
@@ -35,10 +36,14 @@ protected:
     void keyPressEvent(QKeyEvent * event);
 
 private:
-
+    float fps = 60;
     Palet palet;
-    Balle balle = Balle(0,0,1,1,1);
-    GLfloat xPalet = 0; // Position du palet
+    Balle balle = Balle(-2,3,10/fps,1,-1);
+
+
+
+private slots:
+    void timeUpdate();
 };
 
 #endif // MYGLWIDGET_H

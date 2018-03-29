@@ -2,30 +2,35 @@
 #define PALET_H
 
 #include <GL/glu.h>
+#include <opencv2/core.hpp>
+#include <math.h>
+#include "balle.h"
 
 class Palet
 {
 public:
     Palet();
     void draw();
-    void setX(float x){this->x = x - length/2;}
+    void setX(float x){this->_x = x - _length/2;}
+    float getX(){return (this->_x - _length/2);}
+    cv::Point2f getDir(Balle ball);
 
 private:
     // Taille du palet
-    float length = 16;
-    float radius = 0.6;
+    float _length = 16;
+    float _radius = 0.6;
 
     // Position du palet
-    float x = length/2;
-    float y = -20;
-    float z = 0;
+    float _x = _length/2;
+    float _y = -20;
+    float _z = 0;
 
     // Couleur 38, 196, 236
-    float r = 38.0/255;
-    float g = 196.0/255;
-    float b = 236.0/255;
+    float _r = 38.0/255;
+    float _g = 196.0/255;
+    float _b = 236.0/255;
 
-    GLUquadric* quadric = gluNewQuadric();
+    GLUquadric* _quadric = gluNewQuadric();
 };
 
 #endif // PALET_H
