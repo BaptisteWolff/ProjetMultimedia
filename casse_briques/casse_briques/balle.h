@@ -56,9 +56,9 @@ private:
     float sizeball = 1.0f;
     GLUquadric* ball;
         /** Couleur & Texture **/
-    float r = 38;
-    float g = 196;
-    float b = 236;
+    float r = 255.0/255;
+    float g = 0/255;
+    float b = 0;
 
     /** Normalisation de la direction **/
     void dirNorm();

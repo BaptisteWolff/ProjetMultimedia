@@ -9,6 +9,7 @@
 #include "palet.h"
 #include "balle.h"
 #include "QTimer"
+#include "wall.h"
 
 
 // Classe dediee a l'affichage d'une scene OpenGL
@@ -39,7 +40,10 @@ private:
     float fps = 60;
     Palet palet;
     Balle balle = Balle(-2,3,10/fps,1,-1);
-
+    Wall upperWall;
+    Wall rightWall;
+    Wall leftWall;
+    Wall lowerWall;
 
 
 private slots:

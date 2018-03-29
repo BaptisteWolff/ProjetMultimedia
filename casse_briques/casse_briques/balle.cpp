@@ -36,7 +36,7 @@ void Balle::drawnBall(){
     glPushMatrix();
     ball = gluNewQuadric();
     glTranslatef(x_, y_, z_); // On lui applique une translation
-    glColor3f(0.0, 0.0, 1.0); // On définit la couleur courante comme étant bleue
+    glColor3f(r, g, b); // On définit la couleur courante comme étant bleue
     gluSphere(ball, sizeball, 32, 32); // On dessine une sphère
     glPopMatrix();
 }

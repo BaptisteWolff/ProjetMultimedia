@@ -25,10 +25,10 @@ private:
     float _y = -20;
     float _z = 0;
 
-    // Couleur 38, 196, 236
-    float _r = 38.0/255;
-    float _g = 196.0/255;
-    float _b = 236.0/255;
+    // Couleur rgb(255, 128, 0)
+    float _r = 255.0/255;
+    float _g = 128.0/255;
+    float _b = 0.0/255;
 
     GLUquadric* _quadric = gluNewQuadric();
 };
