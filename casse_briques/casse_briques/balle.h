@@ -28,6 +28,8 @@ public:
     void changeDirection(float xDirection, float yDirection){xdirection_=xDirection;ydirection_ = yDirection;}
     // Permet de changer la speed de la balle
     void changeSpeed(int newSpeed){speed_ = newSpeed;}
+    // Permet de changer la taille de la balle
+    void changeSpeed(float newsizeball){sizeball = newsizeball;}
     // Permet d'avoir l'emplacement actuel de la balle :
     float getX(){return x_;}
     float getY(){return y_;}
