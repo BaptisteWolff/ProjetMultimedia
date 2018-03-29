@@ -86,6 +86,7 @@ void CasseBriques::paintGL()
 
     // Debut de l'affichage
     palet.draw();
+    balle.drawnBall();
 }
 
 
@@ -97,10 +98,7 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
         // Changement de couleur du fond
         case Qt::Key_B:
         {
-            float R = rand() / (float)RAND_MAX;
-            float G = rand() / (float)RAND_MAX;
-            float B = rand() / (float)RAND_MAX;
-            glClearColor(R, G, B, 1.0);
+            balle.moveBall();
             break;
         }
 

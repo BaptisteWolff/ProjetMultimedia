@@ -7,6 +7,7 @@
 #include <QVector2D>
 
 #include "palet.h"
+#include "balle.h"
 
 
 // Classe dediee a l'affichage d'une scene OpenGL
@@ -36,7 +37,7 @@ protected:
 private:
 
     Palet palet;
-
+    Balle balle = Balle(0,0,1,1,1);
 };
 
 #endif // MYGLWIDGET_H

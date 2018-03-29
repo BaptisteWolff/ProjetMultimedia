@@ -57,7 +57,7 @@ void OpenGlWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // Definition de la matrice Projection :
     glLoadIdentity( );
-    gluPerspective(90, (float)width()/(float)height(), 0.1, 1000);
+    //gluPerspective(90, (float)width()/(float)height(), 0.1, 1000);
     //glFrustum(-1.6, 1.6, -0.9, 0.9, 1, 1000); // Définir les paramètres pour notre projection perspective
     // Definition et réinitialisation de la matrice de modelisation / visualisation
     glMatrixMode(GL_MODELVIEW);
@@ -77,6 +77,6 @@ void OpenGlWidget::paintGL()
 void OpenGlWidget::translateSphere(float x, float y, float z) // Il faut faire attention le x/y est beaucoup trop grand par rapport à l'échelle prix.
 {
     x_ += x/30; //
-    y_ += y/30; //yc
+    y_ -= y/30; //yc
     updateGL();
 }
