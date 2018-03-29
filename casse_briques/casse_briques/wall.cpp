@@ -65,7 +65,7 @@ void Wall::draw()
     glPopMatrix(); // On redonne le repère d’origine
 }
 
-cv::Point2f Wall::getDir(Balle ball)
+cv::Point2f Wall::getDir(Ball ball)
 {
     float xDir = ball.getXDir();
     float yDir = ball.getYDir();
@@ -86,4 +86,23 @@ cv::Point2f Wall::getDir(Balle ball)
     }
 
     return cv::Point2f(xDir, yDir);
+}
+
+bool Wall::isTouching(Ball ball)
+{
+    float radius = ball.getRadius();
+    int xMin = ball.getX() - radius;
+    int xMax = ball.getX() + radius;
+    int yMin = ball.getY() - radius;
+    int yMax = ball.getY() + radius;
+
+    if (xMax == this->xMin_ || xMin == this->xMax_)
+    {
+        return true;
+    }
+    if (yMax == this->yMin_ || yMin == this->yMax_)
+    {
+        return true;
+    }
+    return false;
 }

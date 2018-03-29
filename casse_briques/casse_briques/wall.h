@@ -2,16 +2,17 @@
 #define WALL_H
 
 #include <opencv2/core.hpp>
-#include "balle.h"
+#include "ball.h"
 
 class Wall
 {
 public:
     Wall(cv::Point2f center, float sizeX, float sizeY);
     Wall();
-    cv::Point2f getDir(Balle ball);
+    cv::Point2f getDir(Ball ball);
     void draw();
     void setRGB(float r, float g, float b){r_ = r/255; g_ = g/255; b_ = b/255;}
+    bool isTouching(Ball ball);
 
 private:
     cv::Point2f _p1, _p2;

@@ -107,7 +107,9 @@ void CasseBriques::paintGL()
 
     palet.setX(X);
     palet.draw();
-    balle.drawnBall();
+    ball1.drawnBall();
+    ball2.drawnBall();
+    ball3.drawnBall();
     upperWall.draw();
     lowerWall.draw();
     rightWall.draw();
@@ -123,7 +125,7 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
         // Changement de couleur du fond
         case Qt::Key_B:
         {
-            balle.moveBall();
+            ball1.moveBall();
             break;
         }
 
@@ -213,11 +215,22 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 }
 
 void CasseBriques::timeUpdate()
-{
-    balle.moveBall();
-    balle.changeDirection(palet.getDir(balle));
-    balle.changeDirection(upperWall.getDir(balle));
-    balle.changeDirection(rightWall.getDir(balle));
-    balle.changeDirection(leftWall.getDir(balle));
+{    
+    ball1 = updateBall(ball1);
+    ball2 = updateBall(ball2);
+    ball3 = updateBall(ball3);
     updateGL();
+}
+
+Ball CasseBriques::updateBall(Ball ball)
+{
+    if (ball.isAlive()){
+        ball.moveBall();
+        ball.changeDirection(palet.getDir(ball));
+        ball.changeDirection(upperWall.getDir(ball));
+        ball.changeDirection(rightWall.getDir(ball));
+        ball.changeDirection(leftWall.getDir(ball));
+        ball.setAlive(!lowerWall.isTouching(ball));
+    }
+    return ball;
 }

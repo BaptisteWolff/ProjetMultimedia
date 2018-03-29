@@ -4,7 +4,7 @@
 #include <GL/glu.h>
 #include <opencv2/core.hpp>
 #include <math.h>
-#include "balle.h"
+#include "ball.h"
 
 class Palet
 {
@@ -13,7 +13,7 @@ public:
     void draw();
     void setX(float x){this->_x = x - _length/2;}
     float getX(){return (this->_x - _length/2);}
-    cv::Point2f getDir(Balle ball);
+    cv::Point2f getDir(Ball ball);
 
 private:
     // Taille du palet

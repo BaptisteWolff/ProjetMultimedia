@@ -18,7 +18,7 @@ void Palet::draw()
 
 }
 
-cv::Point2f Palet::getDir(Balle ball)
+cv::Point2f Palet::getDir(Ball ball)
 {
     float radius = ball.getRadius();
     float y = ball.getY();

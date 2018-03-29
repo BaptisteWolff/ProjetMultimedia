@@ -12,14 +12,14 @@
 
 using namespace std;
 
-class Balle
+class Ball
 {
 public:
     /** Constructeur **/
-    Balle(float x, float y, float z, float speed, float xdirection, float ydirection, float zdirection);
-    Balle(float x, float y,float speed,float xdirection,float ydirection);
+    Ball(float x, float y, float z, float speed, float xdirection, float ydirection, float zdirection);
+    Ball(float x, float y,float speed,float xdirection,float ydirection);
     /** Destructeur **/
-    virtual ~Balle();
+    virtual ~Ball();
     /** Affichage **/
     // Permet d'afficher la balle
     void drawnBall();
@@ -40,6 +40,8 @@ public:
     float getRadius(){return this->sizeball;}
     float getXDir(){return this->xdirection_;}
     float getYDir(){return this->ydirection_;}
+    boolean isAlive(){return alive_;}
+    void setAlive(boolean alive){this->alive_ = alive;}
 private:
     /** Speed **/
     float speed_ = 0; // comprise entre 0 et 5
@@ -62,6 +64,9 @@ private:
 
     /** Normalisation de la direction **/
     void dirNorm();
+
+    //
+    bool alive_ = true;
 };
 
 #endif // BALLE_H
