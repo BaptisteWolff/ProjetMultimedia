@@ -43,3 +43,13 @@ cv::Point2f Palet::getDir(Ball ball)
 
     return cv::Point2f(ball.getXDir(), ball.getYDir());
 }
+
+
+void Palet::setX(float x)
+{
+    x -= this->_length/2;
+    if (x + this->_length <= _xMax && x >= _xMin)
+    {
+        this->_x = x;
+    }
+}
