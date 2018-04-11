@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="bricks">
+    <file alias="brick.jpg">textures/bricks/brick.jpg</file>
+    <file alias="bricks.jpg">textures/bricks/bricks.jpg</file>
+    <file alias="brick.png">textures/bricks/brick.png</file>
+</qresource>
+</RCC>
