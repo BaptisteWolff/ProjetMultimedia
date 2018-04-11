@@ -104,7 +104,7 @@ void CasseBriques::paintGL()
     gluLookAt(0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
     // Debut de l'affichage
-    Brick1.setTexture("bricks.jpg");
+   // Brick1.setTexture("bricks.jpg");
     Brick1.drawnBrick();
     Brick2.drawnBrick();
     palet.setX(X);
@@ -186,12 +186,14 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 
         case Qt::Key_Left:
         {
+            X = palet.getX();
             X-=1;
             break;
         }
 
         case Qt::Key_Right:
         {
+            X = palet.getX();
             X+=1;
             break;
         }
