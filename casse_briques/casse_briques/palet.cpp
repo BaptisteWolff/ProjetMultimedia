@@ -2,7 +2,7 @@
 
 Palet::Palet()
 {
-
+    setX(0);
 }
 
 void Palet::draw()

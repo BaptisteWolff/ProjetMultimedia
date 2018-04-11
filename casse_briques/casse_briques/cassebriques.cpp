@@ -104,10 +104,10 @@ void CasseBriques::paintGL()
     gluLookAt(0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
     // Debut de l'affichage
-   // Brick1.setTexture("bricks.jpg");
+    Brick1.setTexture("bricks.jpg");
     Brick1.drawnBrick();
     Brick2.drawnBrick();
-    palet.setX(X);
+    //palet.setX(X);
     palet.draw();
     ball1.drawnBall();
     ball2.drawnBall();
@@ -195,15 +195,17 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 
         case Qt::Key_Left:
         {
-            X = palet.getX();
-            X-=1;
+            float x = palet.getX();
+            x -= 1;
+            palet.setX(x);
             break;
         }
 
         case Qt::Key_Right:
         {
-            X = palet.getX();
-            X+=1;
+            float x = palet.getX();
+            x += 1;
+            palet.setX(x);
             break;
         }
 
