@@ -30,9 +30,10 @@ TARGET 	  = CasseBriques
 SOURCES	+= main.cpp \
     cassebriques.cpp \
     palet.cpp \
+    ball.cpp \
     brick.cpp \
-    wall.cpp \
-    ball.cpp
+    wall.cpp
+
 HEADERS += \
     cassebriques.h \
     palet.h \

@@ -7,15 +7,12 @@ Palet::Palet()
 
 void Palet::draw()
 {
-
     glPushMatrix();
-
     glColor3f(_r, _g, _b);
     glTranslatef(_x, _y, _z);
     glRotatef(90, 0, 1, 0);
     gluCylinder(_quadric, _radius, _radius, _length, 100, 1);
     glPopMatrix();
-
 }
 
 cv::Point2f Palet::getDir(Ball ball)
