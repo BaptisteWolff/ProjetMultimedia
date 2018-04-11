@@ -8,7 +8,7 @@
 
 #include "palet.h"
 #include "balle.h"
-
+#include "brick.h"
 
 // Classe dediee a l'affichage d'une scene OpenGL
 class CasseBriques : public QGLWidget
@@ -39,6 +39,8 @@ private:
     Palet palet;
     Balle balle = Balle(0,0,1,1,1);
     GLfloat xPalet = 0; // Position du palet
+    Brick Brick1 = Brick(0,0,0);
+    Brick Brick2 = Brick(6,6,0);
 };
 
 #endif // MYGLWIDGET_H

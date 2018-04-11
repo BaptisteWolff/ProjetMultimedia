@@ -2,6 +2,8 @@
 #define BRICK_H
 #include <GL/glu.h>
 #include <QColor>
+#include <QImage>
+#include <QGLWidget>
 #include <QtGui/qopengl.h>
 
 #include <cstdio>
@@ -22,12 +24,14 @@ public:
     float getX(){return x_;}
     float getY(){return y_;}
     float getZ(){return z_;}
-    // Permet de setter la taille:
+    // Permet de set la taille:
     void setSize(float sizeX,float sizeY,float sizeZ);
     // Permet de savoir la taille :
     float getSizeX(){return sizeX_;}
     float getSizeY(){return sizeY_;}
     float getSizeZ(){return sizeZ_;}
+    // Permet de set la texure :
+    void setTexture(string m_Name);
 private:
     /** Brick **/
         /** Coordonnée **/
@@ -42,6 +46,10 @@ private:
     float r = 0;
     float g = 255;
     float b = 0;
+    bool texture = false;
+    // Identifiant de texture
+    GLuint m_TextureID = 0;
+    QImage tex;
 };
 
 #endif // BRICKS_H

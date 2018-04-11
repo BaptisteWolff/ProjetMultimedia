@@ -22,9 +22,11 @@ SOURCES	+= main.cpp \
     cassebriques.cpp \
     palet.cpp \
     balle.cpp \
-    brick.cpp
+    brick.cpp \
+
 HEADERS += \
     cassebriques.h \
     palet.h \
     balle.h \
-    brick.h
+    brick.h \
+
