@@ -20,7 +20,7 @@ cv::Point2f Palet::getDir(Ball ball)
     float radius = ball.getRadius();
     float y = ball.getY();
 
-    if ((y <= _y + _radius) && (y >= _y - radius))
+    if ((y - radius <= _y + _radius) && (y + radius >= _y - _radius))
     {
 
         float xMin = ball.getX() - radius;

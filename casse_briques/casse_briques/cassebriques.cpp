@@ -40,11 +40,11 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     setFixedSize(WIN_WIDTH, WIN_HEIGHT);
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    QTimer *timer = new QTimer(this);
+    timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
     timer->start(1000/fps);
 
-    float wallWidth = 1;
+    float wallWidth = 2;
 
     cv::Point2f p1(0, 28);
     cv::Point2f p2(50, 0);
@@ -162,7 +162,14 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
         // Changement de l'objet a afficher
         case Qt::Key_Space:
         {
-            triangle = !triangle;
+            if(timer->isActive())
+            {
+                timer->stop();
+            }
+            else
+            {
+                timer->start();
+            }
             break;
         }
 
@@ -174,13 +181,15 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 
         case Qt::Key_Up:
         {
-            Y+=0.01;
+            if(!timer->isActive())
+            {
+                timeUpdate();
+            }
             break;
         }
 
         case Qt::Key_Down:
         {
-            Y-=0.01;
             break;
         }
 
@@ -213,9 +222,9 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
         }
     }
 
-    // Acceptation de l'evenement et mise a jour de la scene
+    // Acceptation de l'evenement
     event->accept();
-    updateGL();
+    //updateGL();
 }
 
 void CasseBriques::timeUpdate()

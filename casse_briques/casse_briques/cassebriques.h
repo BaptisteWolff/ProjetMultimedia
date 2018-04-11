@@ -51,6 +51,8 @@ private:
     Wall lowerWall;
     Ball updateBall(Ball ball);
 
+    QTimer *timer;
+
 private slots:
     void timeUpdate();
 };
