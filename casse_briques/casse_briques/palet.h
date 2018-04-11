@@ -11,7 +11,7 @@ class Palet
 public:
     Palet();
     void draw();
-    void setX(float x){this->_x = x - _length/2;}
+    void setX(float x);/*{this->_x = x - _length/2;}*/
     float getX(){return (this->_x - _length/2);}
     cv::Point2f getDir(Ball ball);
 
@@ -24,6 +24,9 @@ private:
     float _x = _length/2;
     float _y = -20;
     float _z = 0;
+
+    float _xMax = 50;
+    float _xMin = -50;
 
     // Couleur rgb(255, 128, 0)
     float _r = 255.0/255;
