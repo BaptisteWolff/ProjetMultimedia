@@ -39,6 +39,24 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     // Reglage de la taille/position
     setFixedSize(WIN_WIDTH, WIN_HEIGHT);
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
+    timer->start(1000/fps);
+
+    float wallWidth = 1;
+
+    cv::Point2f p1(0, 28);
+    cv::Point2f p2(50, 0);
+    cv::Point2f p3(0, -28);
+    cv::Point2f p4(-50, 0);
+
+    upperWall = Wall(p1, 100, wallWidth);
+    rightWall = Wall(p2, wallWidth, 56);
+    lowerWall = Wall(p3, 100, wallWidth);
+    leftWall = Wall(p4, wallWidth, 56);
+
+    lowerWall.setRGB(0, 255, 0);
 }
 
 
@@ -91,7 +109,13 @@ void CasseBriques::paintGL()
     Brick2.drawnBrick();
     palet.setX(X);
     palet.draw();
-//    balle.drawnBall();
+    ball1.drawnBall();
+    ball2.drawnBall();
+    ball3.drawnBall();
+    upperWall.draw();
+    lowerWall.draw();
+    rightWall.draw();
+    leftWall.draw();
 }
 
 
@@ -103,7 +127,7 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
         // Changement de couleur du fond
         case Qt::Key_B:
         {
-            balle.moveBall();
+            ball1.moveBall();
             break;
         }
 
@@ -190,4 +214,25 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
     // Acceptation de l'evenement et mise a jour de la scene
     event->accept();
     updateGL();
+}
+
+void CasseBriques::timeUpdate()
+{    
+    ball1 = updateBall(ball1);
+    ball2 = updateBall(ball2);
+    ball3 = updateBall(ball3);
+    updateGL();
+}
+
+Ball CasseBriques::updateBall(Ball ball)
+{
+    if (ball.isAlive()){
+        ball.moveBall();
+        ball.changeDirection(palet.getDir(ball));
+        ball.changeDirection(upperWall.getDir(ball));
+        ball.changeDirection(rightWall.getDir(ball));
+        ball.changeDirection(leftWall.getDir(ball));
+        ball.setAlive(!lowerWall.isTouching(ball));
+    }
+    return ball;
 }
