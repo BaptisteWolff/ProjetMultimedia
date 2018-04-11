@@ -12,7 +12,7 @@ Brick::Brick(float x, float y, float z){
 }
 
 void Brick::setTexture(string m_Name){
-    tex = QGLWidget::convertToGLFormat(QImage(QString("D:/workspaces/ProjetMultimedia/casse_briques/casse_briques/textures/bricks/%1").arg(QString::fromStdString(m_Name))));
+    tex = QGLWidget::convertToGLFormat(QImage(QString(":/bricks/%1").arg(QString::fromStdString(m_Name))));
     glGenTextures(1, &m_TextureID);
     glBindTexture(GL_TEXTURE_2D, m_TextureID);
     glTexImage2D( GL_TEXTURE_2D, 0, 4, tex.width(),tex.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, tex.bits() );

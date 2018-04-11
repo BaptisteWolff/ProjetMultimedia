@@ -40,3 +40,5 @@ HEADERS += \
     brick.h \
     wall.h \
     ball.h
+
+RESOURCES     = textures.qrc

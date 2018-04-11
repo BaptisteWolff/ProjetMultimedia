@@ -5,7 +5,7 @@
 #include <QImage>
 #include <QGLWidget>
 #include <QtGui/qopengl.h>
-
+#include <QCoreApplication>
 #include <cstdio>
 #include <iostream>
 
