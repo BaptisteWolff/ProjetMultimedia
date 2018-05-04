@@ -3,12 +3,14 @@
 Brick::Brick(float x, float y){
     x_=x;
     y_=y;
+    setEdges();
 }
 
 Brick::Brick(float x, float y, float z){
     x_=x;
     y_=y;
     z_=z;
+    setEdges();
 }
 
 void Brick::setTexture(string m_Name){
@@ -82,4 +84,45 @@ void Brick::setSize(float sizeX,float sizeY,float sizeZ){
     sizeX_ = sizeX;
     sizeY_ = sizeY;
     sizeZ_ = sizeZ;
+    setEdges();
+}
+
+cv::Point2f Brick::getDir(Ball ball)
+{
+    float xDir = ball.getXDir();
+    float yDir = ball.getYDir();
+
+    float x = ball.getX();
+    float y = ball.getY();
+    float radius = ball.getRadius();
+    float xMin = ball.getX() - radius;
+    float xMax = ball.getX() + radius;
+    float yMin = ball.getY() - radius;
+    float yMax = ball.getY() + radius;
+
+    if (yMin <= yMax_ && yMax >= yMin_ && xMin <= xMax_ && xMax >= xMin_)
+    {
+        float ymm = fmin((yMin - yMax_), (yMax - yMin_));
+        float xmm = fmin((xMin - xMax_), (xMax - xMin_));
+
+        if(ymm <= xmm)
+        {
+            yDir = -yDir;
+        }
+        else
+        {
+            xDir = -xDir;
+        }
+    }
+
+    return cv::Point2f(xDir, yDir);
+}
+
+void Brick::setEdges()
+{
+    xMin_ = x_ - sizeX_/2;
+    xMax_ = x_ + sizeX_/2;
+
+    yMin_ = y_ - sizeY_/2;
+    yMax_ = y_ + sizeY_/2;
 }
