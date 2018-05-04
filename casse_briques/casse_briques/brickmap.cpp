@@ -1,4 +1,5 @@
 #include "brickmap.h"
+#include "brick.h"
 
 BrickMap::BrickMap()
 {
@@ -25,7 +26,8 @@ void BrickMap::autoConstruct(){
 
         }else{
         QString key = QString::number(d_brick)+","+QString::number(c_brick);
-        m_Bricks.insert(std::pair<QString,Brick*>(key,new Brick(widthPlot/(-2)+wallWidth+d_brick*(dSizeBrick+1)+dSizeBrick/2,depthPlot-wallWidth-c_brick*(cSizeBrick+1)-cSizeBrick/2)));
+        Brick* brick1 = new Brick(widthPlot/(-2)+wallWidth+d_brick*(dSizeBrick+1)+dSizeBrick/2,depthPlot-wallWidth-c_brick*(cSizeBrick+1)-cSizeBrick/2);
+        m_Bricks.insert(std::pair<QString,Brick*>(key,brick1));
         m_Bricks.at(key)->setSize(dSizeBrick,cSizeBrick,4);
         d_brick++;
         }
@@ -51,7 +53,7 @@ void BrickMap::drawnBricks(){
 void BrickMap::destroyBrick(QString key){
     m_Bricks.erase(key);
 }
-Brick* BrickMap::Brick(QString key){
+Brick* BrickMap::brick(QString key){
     return m_Bricks[key];
 }
 bool BrickMap::empty(){

@@ -1,10 +1,11 @@
 #ifndef BRICKMAP_H
 #define BRICKMAP_H
+#include "brick.h"
 #include <QGLWidget>
 #include <QKeyEvent>
 #include <Qstring>
 #include <QVector2D>
-#include "brick.h"
+
 class BrickMap
 {
 private:
@@ -32,7 +33,7 @@ public:
     float getMinDepth() {return (depthPlot/(-2)+wallWidth+cSizeBrick/2);}
     void destroyBrick(QString key);
     bool empty();
-    Brick* Brick(QString key);
+    Brick* brick(QString key);
 };
 
 #endif // BRICKMAP_H
