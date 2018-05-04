@@ -5,9 +5,9 @@
 #include <QKeyEvent>
 #include <QColor>
 #include <QVector2D>
-
 #include "palet.h"
 #include "brick.h"
+#include "brickmap.h"
 #include "ball.h"
 #include "QTimer"
 #include "wall.h"
@@ -50,9 +50,8 @@ private:
     Wall leftWall;
     Wall lowerWall;
     Ball updateBall(Ball ball);
-
+    BrickMap* mBricks = new BrickMap();
     QTimer *timer;
-
 private slots:
     void timeUpdate();
 };

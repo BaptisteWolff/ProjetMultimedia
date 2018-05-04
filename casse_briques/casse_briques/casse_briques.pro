@@ -32,13 +32,15 @@ SOURCES	+= main.cpp \
     palet.cpp \
     ball.cpp \
     brick.cpp \
-    wall.cpp
+    wall.cpp \
+    brickmap.cpp
 
 HEADERS += \
     cassebriques.h \
     palet.h \
     brick.h \
     wall.h \
-    ball.h
+    ball.h \
+    brickmap.h
 
 RESOURCES     = textures.qrc

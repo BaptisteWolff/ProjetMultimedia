@@ -45,17 +45,15 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     timer->start(1000/fps);
 
     float wallWidth = 2;
-
     cv::Point2f p1(0, 28);
     cv::Point2f p2(50, 0);
     cv::Point2f p3(0, -28);
     cv::Point2f p4(-50, 0);
-
+    mBricks->autoConstruct();
     upperWall = Wall(p1, 100, wallWidth);
     rightWall = Wall(p2, wallWidth, 56);
     lowerWall = Wall(p3, 100, wallWidth);
     leftWall = Wall(p4, wallWidth, 56);
-
     lowerWall.setRGB(0, 255, 0);
 }
 
@@ -104,9 +102,14 @@ void CasseBriques::paintGL()
     gluLookAt(0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
     // Debut de l'affichage
-    Brick1.setTexture("bricks.jpg");
-    Brick1.drawnBrick();
-    Brick2.drawnBrick();
+    //Brick1.setTexture("bricks.jpg");
+    y_brick=0;
+    x_brick=0;
+    mBricks->drawnBricks();
+    if (mBricks->empty()){
+        Brick2.drawnBrick();
+    }
+    //Brick2.drawnBrick();
     //palet.setX(X);
     palet.draw();
     ball1.drawnBall();

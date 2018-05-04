@@ -33,6 +33,7 @@ public:
     float getSizeZ(){return sizeZ_;}
     // Permet de set la texure :
     void setTexture(string m_Name);
+    void setXY(float x, float y);
 private:
     /** Brick **/
         /** Coordonnée **/
