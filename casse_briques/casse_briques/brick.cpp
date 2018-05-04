@@ -1,10 +1,10 @@
 #include "brick.h"
 
+Brick::Brick(){}
 Brick::Brick(float x, float y){
     x_=x;
     y_=y;
 }
-
 Brick::Brick(float x, float y, float z){
     x_=x;
     y_=y;

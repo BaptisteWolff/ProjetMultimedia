@@ -15,6 +15,7 @@ class Brick
 {
 public:
     /** Constructeur **/
+    Brick();
     Brick(float x, float y, float z);
     Brick(float x, float y);
     /** Affichage **/
