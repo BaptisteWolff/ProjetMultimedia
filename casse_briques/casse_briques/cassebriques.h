@@ -5,6 +5,8 @@
 #include <QKeyEvent>
 #include <QColor>
 #include <QVector2D>
+#include <QScreen>
+#include <QDebug>
 #include "palet.h"
 #include "brick.h"
 #include "brickmap.h"
@@ -42,9 +44,9 @@ private:
     GLfloat xPalet = 0; // Position du palet
     Brick Brick1 = Brick(0,0,0);
     Brick Brick2 = Brick(6,6,0);
-    Ball ball1 = Ball(0,5,20/fps,0,-1);
-    Ball ball2 = Ball(3,5,20/fps,0,-1);
-    Ball ball3 = Ball(-3,5,20/fps,0,-1);
+    Ball ball1 = Ball(0,1,20/fps,0,-1);
+    Ball ball2 = Ball(3,1,20/fps,0,-1);
+    Ball ball3 = Ball(-3,1,20/fps,0,-1);
     Wall upperWall;
     Wall rightWall;
     Wall leftWall;

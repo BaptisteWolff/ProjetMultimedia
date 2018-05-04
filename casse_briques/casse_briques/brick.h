@@ -8,6 +8,10 @@
 #include <QCoreApplication>
 #include <cstdio>
 #include <iostream>
+#include <opencv2/core.hpp>
+#include <math.h>
+
+#include "ball.h"
 
 using namespace std;
 
@@ -34,12 +38,20 @@ public:
     // Permet de set la texure :
     void setTexture(string m_Name);
     void setXY(float x, float y);
+    // Permet de tester si la balle touche la brique et donne la direction x,y de la balle
+    cv::Point2f getDir(Ball ball);
+
 private:
     /** Brick **/
         /** Coordonnée **/
     float x_ = 0.0;
     float y_ = 0.0;
     float z_ = 0.0;
+        /** Bords **/
+    float xMin_;
+    float xMax_;
+    float yMin_;
+    float yMax_;
         /** Taille **/
     float sizeX_ = 4.0;
     float sizeY_ = 4.0;
@@ -52,6 +64,8 @@ private:
     // Identifiant de texture
     GLuint m_TextureID = 0;
     QImage tex;
+
+    void setEdges();
 };
 
 #endif // BRICKS_H

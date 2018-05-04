@@ -10,6 +10,9 @@ Ball::Ball(float x, float y, float z, float speed, float xdirection, float ydire
     x_ = x;
     y_ = y;
     z_ = z;
+    xPrec_ = x_;
+    yPrec_ = y_;
+    zPrec_ = z_;
     speed_ = speed;
     xdirection_ = xdirection;
     ydirection_ = ydirection;
@@ -20,6 +23,8 @@ Ball::Ball(float x, float y, float speed, float xdirection, float ydirection)
 {
     x_ = x;
     y_ = y;
+    xPrec_ = x;
+    yPrec_ = y;
     speed_ = speed;
     xdirection_ = xdirection;
     ydirection_ = ydirection;
@@ -43,6 +48,9 @@ void Ball::drawnBall(){
     }
 }
 void Ball::moveBall(){
+    xPrec_ = x_;
+    yPrec_ = y_;
+    zPrec_ = z_;
     x_ += xdirection_*speed_;
     y_ += ydirection_*speed_;
     z_ += zdirection_*speed_;

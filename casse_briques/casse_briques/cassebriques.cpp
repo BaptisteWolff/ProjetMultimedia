@@ -40,10 +40,6 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     setFixedSize(WIN_WIDTH, WIN_HEIGHT);
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
-    timer->start(1000/fps);
-
     float wallWidth = 2;
     cv::Point2f p1(0, 28);
     cv::Point2f p2(50, 0);
@@ -55,6 +51,17 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     lowerWall = Wall(p3, 100, wallWidth);
     leftWall = Wall(p4, wallWidth, 56);
     lowerWall.setRGB(0, 255, 0);
+
+    QScreen *screen = QApplication::screens().at(0);
+    fps = screen->refreshRate();
+
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
+    timer->start(1000/fps);
+
+    ball1 = Ball(0,-3,20/fps,0,-1);
+    ball2 = Ball(3,-3,20/fps,0,-1);
+    ball3 = Ball(-3,-3,20/fps,0,-1);
 }
 
 
@@ -102,15 +109,7 @@ void CasseBriques::paintGL()
     gluLookAt(0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
     // Debut de l'affichage
-    //Brick1.setTexture("bricks.jpg");
-    y_brick=0;
-    x_brick=0;
     mBricks->drawnBricks();
-    if (mBricks->empty()){
-        Brick2.drawnBrick();
-    }
-    //Brick2.drawnBrick();
-    //palet.setX(X);
     palet.draw();
     ball1.drawnBall();
     ball2.drawnBall();
@@ -248,6 +247,8 @@ Ball CasseBriques::updateBall(Ball ball)
         ball.changeDirection(upperWall.getDir(ball));
         ball.changeDirection(rightWall.getDir(ball));
         ball.changeDirection(leftWall.getDir(ball));
+        ball.changeDirection(Brick1.getDir(ball));
+        ball.changeDirection(Brick2.getDir(ball));
         ball.setAlive(!lowerWall.isTouching(ball));
     }
     return ball;
