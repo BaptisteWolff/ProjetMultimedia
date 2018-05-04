@@ -57,11 +57,13 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
-    timer->start(1000/fps);
+    timer->setInterval(1000/fps);
+    //timer->start();
 
-    ball1 = Ball(0,-5,20/fps,0,-1);
-    ball2 = Ball(3,-5,20/fps,0,-1);
-    ball3 = Ball(-3,-5,20/fps,0,-1);
+    ball = Ball(0,-5,20/fps,0,-1);
+    setInitBall();
+    /*ball2 = Ball(3,-5,20/fps,0,-1);
+    ball3 = Ball(-3,-5,20/fps,0,-1);*/
 }
 
 
@@ -111,9 +113,9 @@ void CasseBriques::paintGL()
     // Debut de l'affichage
     mBricks->drawnBricks();
     palet.draw();
-    ball1.drawnBall();
-    ball2.drawnBall();
-    ball3.drawnBall();
+    ball.drawnBall();
+    /*ball2.drawnBall();
+    ball3.drawnBall();*/
     upperWall.draw();
     lowerWall.draw();
     rightWall.draw();
@@ -129,7 +131,7 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
         // Changement de couleur du fond
         case Qt::Key_B:
         {
-            ball1.moveBall();
+            ball.moveBall();
             break;
         }
 
@@ -230,19 +232,27 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
     event->accept();
     if (!timer->isActive())
     {
+        if(initBall)
+        {
+            setInitBall();
+        }
         updateGL();
+    }
+    else
+    {
+        initBall = false;
     }
 }
 
 void CasseBriques::timeUpdate()
 {    
-    ball1 = updateBall(ball1);
-    ball2 = updateBall(ball2);
-    ball3 = updateBall(ball3);
+    updateBall();
+    //ball2 = updateBall(ball2);
+    //ball3 = updateBall(ball3);
     updateGL();
 }
 
-Ball CasseBriques::updateBall(Ball ball)
+void CasseBriques::updateBall()
 {
     if (ball.isAlive()){
         ball.moveBall();
@@ -254,5 +264,21 @@ Ball CasseBriques::updateBall(Ball ball)
         ball.changeDirection(mBricks->getDir(ball));
         ball.setAlive(!lowerWall.isTouching(ball));
     }
-    return ball;
+
+    if(!ball.isAlive() && ball.getLife() > 0)
+    {
+        timer->stop();
+        setInitBall();
+        ball.removeLife();
+        ball.setAlive(true);
+
+        initBall = true;
+    }
+}
+
+void CasseBriques::setInitBall()
+{
+    ball.setX(palet.getX());
+    ball.setY(palet.getY() + palet.getRadius() + ball.getRadius());
+    ball.setXdir(0);
 }

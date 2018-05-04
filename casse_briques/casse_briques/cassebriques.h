@@ -42,16 +42,19 @@ private:
     float fps = 60;
     Palet palet;
     GLfloat xPalet = 0; // Position du palet
-    Ball ball1 = Ball(0,1,20/fps,0,-1);
-    Ball ball2 = Ball(3,1,20/fps,0,-1);
-    Ball ball3 = Ball(-3,1,20/fps,0,-1);
+    Ball ball = Ball(0,1,20/fps,0,-1);
+    /*Ball ball2 = Ball(3,1,20/fps,0,-1);
+    Ball ball3 = Ball(-3,1,20/fps,0,-1);*/
     Wall upperWall;
     Wall rightWall;
     Wall leftWall;
     Wall lowerWall;
-    Ball updateBall(Ball ball);
+    void updateBall();
     BrickMap* mBricks = new BrickMap();
     QTimer *timer;
+
+    bool initBall = true;
+    void setInitBall();
 private slots:
     void timeUpdate();
 };

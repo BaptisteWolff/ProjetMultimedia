@@ -12,6 +12,8 @@ public:
     Palet();
     void draw();
     void setX(float x);/*{this->_x = x - _length/2;}*/
+    float getY(){return this->_y;}
+    float getRadius(){return this->_radius;}
     float getX(){return (this->_x + _length/2);}
     cv::Point2f getDir(Ball ball);
 
