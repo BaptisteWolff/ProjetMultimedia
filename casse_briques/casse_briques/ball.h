@@ -37,9 +37,6 @@ public:
     float getX(){return x_;}
     float getY(){return y_;}
     float getZ(){return z_;}
-    float getXPrec(){return xPrec_;}
-    float getYPrec(){return yPrec_;}
-    float getZPrec(){return zPrec_;}
     float getRadius(){return this->sizeball;}
     float getXDir(){return this->xdirection_;}
     float getYDir(){return this->ydirection_;}
@@ -57,10 +54,6 @@ private:
     float x_ = 0.0;
     float y_ = 0.0;
     float z_ = 0.0;
-
-    float xPrec_ = x_;
-    float yPrec_ = y_;
-    float zPrec_ = z_;
         /** Quadric **/
     float sizeball = 1.0f;
     GLUquadric* ball;

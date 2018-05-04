@@ -1,6 +1,8 @@
 #include "brickmap.h"
 #include "brick.h"
 
+// ratio des briques : 1/3 !!!!
+
 BrickMap::BrickMap()
 {
     m_Bricks.clear();
@@ -12,8 +14,8 @@ BrickMap::BrickMap(int nbx, int nby)
     m_Bricks.clear();
 }
 void BrickMap::autoSizeBrick(){
-    dSizeBrick=(100-2*wallWidth)/11;
-    cSizeBrick=(56-2*wallWidth)/24;
+    dSizeBrick=(widthPlot-2*wallWidth)/11;
+    cSizeBrick=(depthPlot-2*wallWidth)/16; //24
 }
 void BrickMap::autoConstruct(){
     autoSizeBrick();
@@ -37,16 +39,19 @@ void BrickMap::drawnBricks(){
     c_brick = 0;
     d_brick = 0;
     while (c_brick<depth){
-        if (d_brick==column){
+        if (d_brick==column)
+        {
             d_brick=0;
             c_brick++;
         }
-        if (c_brick == depth){
-
-        }else{
-        QString key = QString::number(d_brick)+","+QString::number(c_brick);
-        m_Bricks.at(key)->drawnBrick();
-        d_brick++;
+        if (c_brick != depth)
+        {
+            QString key = QString::number(d_brick)+","+QString::number(c_brick);
+            if (m_Bricks.count(key) == 1)
+            {
+                m_Bricks.at(key)->drawnBrick();
+            }
+            d_brick++;
         }
     };
 }
@@ -58,4 +63,94 @@ Brick* BrickMap::brick(QString key){
 }
 bool BrickMap::empty(){
     return m_Bricks.empty();
+}
+
+Ball BrickMap::changeDirection(Ball ball)
+{
+    /*float dirX = ball.getXDir();
+    float dirY = ball.getYDir();
+
+    c_brick = 0;
+    d_brick = 0;
+
+    while (c_brick<depth)
+    {
+        if (d_brick==column)
+        {
+            d_brick=0;
+            c_brick++;
+        }
+        if (c_brick != depth)
+        {
+            QString key = QString::number(d_brick)+","+QString::number(c_brick);
+            Brick *brick = m_Bricks.at(key);
+            ball.changeDirection(brick->getDir(ball));
+            if (dirX != ball.getXDir() || dirY != ball.getYDir())
+            {
+                break;
+            }
+            d_brick++;
+        }
+    }
+
+    return ball;*/
+}
+
+cv::Point2f BrickMap::getDir(Ball ball)
+{
+    float x = ball.getX();
+    float y = ball.getY();
+
+    cv::Point2f dir(ball.getXDir(), ball.getYDir());
+
+    float c = -1;
+    float d = -1;
+
+    float dist = 10000;
+
+    c_brick = 0;
+    d_brick = 0;
+
+    while (c_brick<depth)
+    {
+        if (d_brick==column)
+        {
+            d_brick=0;
+            c_brick++;
+        }
+        if (c_brick != depth)
+        {
+            QString key = QString::number(d_brick)+","+QString::number(c_brick);
+            if (m_Bricks.count(key) == 1)
+            {
+                float xBrick1 = widthPlot/(-2)+wallWidth+d_brick*(dSizeBrick+1)+dSizeBrick/2;
+                float yBrick1 = depthPlot-wallWidth-c_brick*(cSizeBrick+1)-cSizeBrick/2;
+
+                float dist1 = sqrt((x - xBrick1) * (x - xBrick1) + (y - yBrick1) * (y - yBrick1));
+                if (dist1 < dist)
+                {
+                    dist = dist1;
+                    c = c_brick;
+                    d = d_brick;
+                }
+            }
+
+            d_brick++;
+        }
+    }
+
+    if (c > -1)
+    {
+        QString key = QString::number(d)+","+QString::number(c);
+        Brick *brick = m_Bricks.at(key);
+
+        dir = brick->getDir(ball);
+        delete brick;
+
+        if (dir.x != ball.getXDir() || dir.y != ball.getYDir())
+        {
+            m_Bricks.erase(key);
+        }
+    }
+    return dir;
 }

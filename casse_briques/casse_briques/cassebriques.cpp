@@ -59,9 +59,9 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
     timer->start(1000/fps);
 
-    ball1 = Ball(0,-3,20/fps,0,-1);
-    ball2 = Ball(3,-3,20/fps,0,-1);
-    ball3 = Ball(-3,-3,20/fps,0,-1);
+    ball1 = Ball(0,-5,20/fps,0,-1);
+    ball2 = Ball(3,-5,20/fps,0,-1);
+    ball3 = Ball(-3,-5,20/fps,0,-1);
 }
 
 
@@ -228,7 +228,10 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 
     // Acceptation de l'evenement
     event->accept();
-    //updateGL();
+    if (!timer->isActive())
+    {
+        updateGL();
+    }
 }
 
 void CasseBriques::timeUpdate()
@@ -247,8 +250,8 @@ Ball CasseBriques::updateBall(Ball ball)
         ball.changeDirection(upperWall.getDir(ball));
         ball.changeDirection(rightWall.getDir(ball));
         ball.changeDirection(leftWall.getDir(ball));
-        ball.changeDirection(Brick1.getDir(ball));
-        ball.changeDirection(Brick2.getDir(ball));
+        //ball = mBricks->changeDirection(ball);
+        ball.changeDirection(mBricks->getDir(ball));
         ball.setAlive(!lowerWall.isTouching(ball));
     }
     return ball;
