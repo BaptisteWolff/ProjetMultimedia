@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <QColor>
 #include <QVector2D>
+#include <QScreen>
 
 #include "palet.h"
 #include "brick.h"
@@ -37,7 +38,7 @@ protected:
     void keyPressEvent(QKeyEvent * event);
 
 private:
-    float fps = 60;
+    float fps = 75;
     Palet palet;
     GLfloat xPalet = 0; // Position du palet
     Brick Brick1 = Brick(0,0,0);

@@ -40,10 +40,6 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     setFixedSize(WIN_WIDTH, WIN_HEIGHT);
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
 
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
-    timer->start(1000/fps);
-
     float wallWidth = 2;
 
     cv::Point2f p1(0, 28);
@@ -57,6 +53,13 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     leftWall = Wall(p4, wallWidth, 56);
 
     lowerWall.setRGB(0, 255, 0);
+
+    QScreen *screen = QApplication::screens().at(0);
+    fps = screen->refreshRate();
+
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
+    timer->start(1000/fps);
 }
 
 
@@ -107,7 +110,6 @@ void CasseBriques::paintGL()
     Brick1.setTexture("bricks.jpg");
     Brick1.drawnBrick();
     Brick2.drawnBrick();
-    //palet.setX(X);
     palet.draw();
     ball1.drawnBall();
     ball2.drawnBall();
