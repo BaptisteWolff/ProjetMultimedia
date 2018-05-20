@@ -62,6 +62,18 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     ball1 = Ball(0,-3,20/fps,0,-1);
     ball2 = Ball(3,-3,20/fps,0,-1);
     ball3 = Ball(-3,-3,20/fps,0,-1);
+    // Webcam setup
+    webCam_=new VideoCapture(0);
+    int width=webCam_->get(CV_CAP_PROP_FRAME_WIDTH);
+    int height=webCam_->get(CV_CAP_PROP_FRAME_HEIGHT);
+    // Timer webcam
+    float fps = 30;
+    timerWebcam = new QTimer(this);
+    timerWebcam->setInterval((int)(1000/fps));
+    connect(timerWebcam, SIGNAL(timeout()) , this, SLOT(webcamCapture()));
+    timerWebcam->start();
+    // Detect motion
+    detectMotion = DetectMotion(width, height);
 }
 
 
@@ -72,10 +84,10 @@ void CasseBriques::initializeGL()
     glClearColor(0.5, 0.5, 0.5, 1.0);
 
     // Activation du zbuffer
-   glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
 
-   // Active les textures 2D
-   //glEnable(GL_TEXTURE_2D);
+    // Active les textures 2D
+    //glEnable(GL_TEXTURE_2D);
 }
 
 
@@ -126,104 +138,110 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 {
     switch(event->key())
     {
-        // Changement de couleur du fond
-        case Qt::Key_B:
-        {
-            ball1.moveBall();
-            break;
-        }
+    // Changement de couleur du fond
+    case Qt::Key_B:
+    {
+        ball1.moveBall();
+        break;
+    }
 
         // Changement de couleur de l'objet
-        case Qt::Key_C:
-        {
-            r1 = rand() / (float)RAND_MAX;
-            g1 = rand() / (float)RAND_MAX;
-            b1 = rand() / (float)RAND_MAX;
+    case Qt::Key_R:
 
-            r2 = rand() / (float)RAND_MAX;
-            g2 = rand() / (float)RAND_MAX;
-            b2 = rand() / (float)RAND_MAX;
+    {
+        r1 = rand() / (float)RAND_MAX;
+        g1 = rand() / (float)RAND_MAX;
+        b1 = rand() / (float)RAND_MAX;
 
-            r3 = rand() / (float)RAND_MAX;
-            g3 = rand() / (float)RAND_MAX;
-            b3 = rand() / (float)RAND_MAX;
+        r2 = rand() / (float)RAND_MAX;
+        g2 = rand() / (float)RAND_MAX;
+        b2 = rand() / (float)RAND_MAX;
 
-            r4 = rand() / (float)RAND_MAX;
-            g4 = rand() / (float)RAND_MAX;
-            b4 = rand() / (float)RAND_MAX;
-            break;
-        }
+        r3 = rand() / (float)RAND_MAX;
+        g3 = rand() / (float)RAND_MAX;
+        b3 = rand() / (float)RAND_MAX;
+
+        r4 = rand() / (float)RAND_MAX;
+        g4 = rand() / (float)RAND_MAX;
+        b4 = rand() / (float)RAND_MAX;
+        break;
+    }
 
         // Affichage/Masquage de l'objet
-        case Qt::Key_H:
-        {
-            primitive = !primitive;
-            break;
-        }
+    case Qt::Key_H:
+    {
+        primitive = !primitive;
+        break;
+    }
 
         // Changement de l'objet a afficher
-        case Qt::Key_Space:
+    case Qt::Key_Space:
+    {
+        if(timer->isActive())
         {
-            if(timer->isActive())
-            {
-                timer->stop();
-            }
-            else
-            {
-                timer->start();
-            }
-            break;
+            timer->stop();
         }
+        else
+        {
+            timer->start();
+        }
+        break;
+    }
 
         // Sortie de l'application
-        case Qt::Key_Escape:
-        {
-            break;
-        }
+    case Qt::Key_Escape:
+    {
+        break;
+    }
 
-        case Qt::Key_Up:
+    case Qt::Key_Up:
+    {
+        if(!timer->isActive())
         {
-            if(!timer->isActive())
-            {
-                timeUpdate();
-            }
-            break;
+            timeUpdate();
         }
+        break;
+    }
 
-        case Qt::Key_Down:
-        {
-            break;
-        }
+    case Qt::Key_Down:
+    {
+        break;
+    }
 
-        case Qt::Key_Left:
-        {
-            float x = palet.getX();
-            x -= 1;
-            palet.setX(x);
-            break;
-        }
+    case Qt::Key_Left:
+    {
+        float x = palet.getX();
+        x -= 1;
+        palet.setX(x);
+        break;
+    }
 
-        case Qt::Key_Right:
-        {
-            float x = palet.getX();
-            x += 1;
-            palet.setX(x);
-            break;
-        }
+    case Qt::Key_Right:
+    {
+        float x = palet.getX();
+        x += 1;
+        palet.setX(x);
+        break;
+    }
 
-        case Qt::Key_R:
-        {
-            angle += 5;
-            break;
+    case Qt::Key_C:
+    {
+        cam =!cam;
+        if (cam){
+            webCam_=new VideoCapture(0);
+        }else{
+            webCam_->release();
         }
+        break;
+    }
 
         // Cas par defaut
-        default:
-        {
-            // Ignorer l'evenement
-            event->ignore();
-            return;
-        }
+    default:
+    {
+        // Ignorer l'evenement
+        event->ignore();
+        return;
+    }
     }
 
     // Acceptation de l'evenement
@@ -252,4 +270,31 @@ Ball CasseBriques::updateBall(Ball ball)
         ball.setAlive(!lowerWall.isTouching(ball));
     }
     return ball;
+}
+void CasseBriques::webcamCapture()
+{
+    if (webCam_->isOpened()) {
+        Mat image;
+        if (webCam_->read(image))
+        {   // Capture a frame
+
+            if (isFirstFrame)
+            {
+                detectMotion.setFirstFrame(image);
+                isFirstFrame = false;
+            }
+            // Detect motion
+            detectMotion.detect(image);
+            // Sphere translation
+            Point vect = detectMotion.getVect();
+            if (vect.x > 5 || vect.x<-5)
+            {
+                float x = palet.getX();
+                x += vect.x/30;
+                palet.setX(x);
+            }
+        }
+        else
+        {}
+    }
 }

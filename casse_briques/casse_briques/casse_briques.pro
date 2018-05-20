@@ -33,7 +33,8 @@ SOURCES	+= main.cpp \
     ball.cpp \
     brick.cpp \
     wall.cpp \
-    brickmap.cpp
+    brickmap.cpp \
+    detectmotion.cpp
 
 HEADERS += \
     cassebriques.h \
@@ -41,6 +42,7 @@ HEADERS += \
     brick.h \
     wall.h \
     ball.h \
-    brickmap.h
+    brickmap.h \
+    detectmotion.h
 
 RESOURCES     = textures.qrc

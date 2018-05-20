@@ -13,7 +13,14 @@
 #include "ball.h"
 #include "QTimer"
 #include "wall.h"
+#include "opencv2/opencv.hpp"
+#include <iostream>
+#include <QTimer>
 
+#include"detectmotion.h"
+
+using namespace cv;
+using namespace std;
 // Classe dediee a l'affichage d'une scene OpenGL
 class CasseBriques : public QGLWidget
 {
@@ -54,7 +61,13 @@ private:
     Ball updateBall(Ball ball);
     BrickMap* mBricks = new BrickMap();
     QTimer *timer;
+    VideoCapture * webCam_;
+    QTimer *timerWebcam;
+    DetectMotion detectMotion;
+    bool isFirstFrame = true;
+    bool cam = false;
 private slots:
+    void webcamCapture();
     void timeUpdate();
 };
 
