@@ -95,9 +95,10 @@ cv::Point2f Brick::getDir(Ball ball)
     float xDir = ball.getXDir();
     float yDir = ball.getYDir();
 
+    float radius = ball.getRadius();
     float x = ball.getX();
     float y = ball.getY();
-    float radius = ball.getRadius();
+
     float xMin = ball.getX() - radius;
     float xMax = ball.getX() + radius;
     float yMin = ball.getY() - radius;
@@ -105,16 +106,22 @@ cv::Point2f Brick::getDir(Ball ball)
 
     if (yMin <= yMax_ && yMax >= yMin_ && xMin <= xMax_ && xMax >= xMin_)
     {
-        float ymm = fmin((yMin - yMax_), (yMax - yMin_));
-        float xmm = fmin((xMin - xMax_), (xMax - xMin_));
 
-        if(ymm <= xmm)
+        float ymm = fmin((y - yMax_)*(y - yMax_), (y - yMin_)*(y - yMin_));
+        float xmm = fmin((x - xMax_)*(x - xMax_), (x - xMin_)*(x - xMin_));
+
+        if(ymm > xmm && ((x - x_ > 0 && xDir < 0) || (x - x_ < 0 && xDir > 0)))
         {
-            yDir = -yDir;
+            xDir = -xDir;
+        }
+        else if ((y - y_ > 0 && yDir < 0) || (y - y_ < 0 && yDir > 0))
+        {
+            yDir = - yDir;
         }
         else
         {
-            xDir = -xDir;
+            yDir = - yDir;
+            xDir = - xDir;
         }
     }
 

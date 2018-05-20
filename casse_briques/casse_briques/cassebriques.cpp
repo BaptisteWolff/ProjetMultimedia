@@ -57,11 +57,10 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
-    timer->start(1000/fps);
+    timer->setInterval(1000/fps);
+    //timer->start();
 
-    ball1 = Ball(0,-3,20/fps,0,-1);
-    ball2 = Ball(3,-3,20/fps,0,-1);
-    ball3 = Ball(-3,-3,20/fps,0,-1);
+
     // Webcam setup
     webCam_=new VideoCapture(0);
     int width=webCam_->get(CV_CAP_PROP_FRAME_WIDTH);
@@ -74,6 +73,10 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     timerWebcam->start();
     // Detect motion
     detectMotion = DetectMotion(width, height);
+    ball = Ball(0,-5,20/fps,0,-1);
+    setInitBall();
+    /*ball2 = Ball(3,-5,20/fps,0,-1);
+    ball3 = Ball(-3,-5,20/fps,0,-1);*/
 }
 
 
@@ -123,9 +126,9 @@ void CasseBriques::paintGL()
     // Debut de l'affichage
     mBricks->drawnBricks();
     palet.draw();
-    ball1.drawnBall();
-    ball2.drawnBall();
-    ball3.drawnBall();
+    ball.drawnBall();
+    /*ball2.drawnBall();
+    ball3.drawnBall();*/
     upperWall.draw();
     lowerWall.draw();
     rightWall.draw();
@@ -246,18 +249,29 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 
     // Acceptation de l'evenement
     event->accept();
-    //updateGL();
+    if (!timer->isActive())
+    {
+        if(initBall)
+        {
+            setInitBall();
+        }
+        updateGL();
+    }
+    else
+    {
+        initBall = false;
+    }
 }
 
 void CasseBriques::timeUpdate()
 {    
-    ball1 = updateBall(ball1);
-    ball2 = updateBall(ball2);
-    ball3 = updateBall(ball3);
+    updateBall();
+    //ball2 = updateBall(ball2);
+    //ball3 = updateBall(ball3);
     updateGL();
 }
 
-Ball CasseBriques::updateBall(Ball ball)
+void CasseBriques::updateBall()
 {
     if (ball.isAlive()){
         ball.moveBall();
@@ -265,11 +279,27 @@ Ball CasseBriques::updateBall(Ball ball)
         ball.changeDirection(upperWall.getDir(ball));
         ball.changeDirection(rightWall.getDir(ball));
         ball.changeDirection(leftWall.getDir(ball));
-        ball.changeDirection(Brick1.getDir(ball));
-        ball.changeDirection(Brick2.getDir(ball));
+        //ball = mBricks->changeDirection(ball);
+        ball.changeDirection(mBricks->getDir(ball));
         ball.setAlive(!lowerWall.isTouching(ball));
     }
-    return ball;
+
+    if(!ball.isAlive() && ball.getLife() > 0)
+    {
+        timer->stop();
+        setInitBall();
+        ball.removeLife();
+        ball.setAlive(true);
+
+        initBall = true;
+    }
+}
+
+void CasseBriques::setInitBall()
+{
+    ball.setX(palet.getX());
+    ball.setY(palet.getY() + palet.getRadius() + ball.getRadius());
+    ball.setXdir(0);
 }
 void CasseBriques::webcamCapture()
 {

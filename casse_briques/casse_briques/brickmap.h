@@ -5,6 +5,8 @@
 #include <QKeyEvent>
 #include <Qstring>
 #include <QVector2D>
+#include <opencv2/core.hpp>
+#include <math.h>
 
 class BrickMap
 {
@@ -34,6 +36,8 @@ public:
     void destroyBrick(QString key);
     bool empty();
     Brick* brick(QString key);
+    Ball changeDirection(Ball ball);
+    cv::Point2f getDir(Ball ball);
 };
 
 #endif // BRICKMAP_H

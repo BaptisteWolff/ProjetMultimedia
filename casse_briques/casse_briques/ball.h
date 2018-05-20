@@ -37,14 +37,18 @@ public:
     float getX(){return x_;}
     float getY(){return y_;}
     float getZ(){return z_;}
-    float getXPrec(){return xPrec_;}
-    float getYPrec(){return yPrec_;}
-    float getZPrec(){return zPrec_;}
+    void setX(float x){this->x_ = x;}
+    void setY(float y){this->y_ = y;}
+    void setZ(float z){this->z_ = z;}
+    void setXdir(float dir){this->xdirection_ = dir; dirNorm();}
+    void removeLife(){this->life_--;}
     float getRadius(){return this->sizeball;}
     float getXDir(){return this->xdirection_;}
     float getYDir(){return this->ydirection_;}
     boolean isAlive(){return alive_;}
     void setAlive(boolean alive){this->alive_ = alive;}
+    int getLife(){return life_;}
+    void setLife(int life){this->life_ = life;}
 private:
     /** Speed **/
     float speed_ = 0; // comprise entre 0 et 5
@@ -57,10 +61,6 @@ private:
     float x_ = 0.0;
     float y_ = 0.0;
     float z_ = 0.0;
-
-    float xPrec_ = x_;
-    float yPrec_ = y_;
-    float zPrec_ = z_;
         /** Quadric **/
     float sizeball = 1.0f;
     GLUquadric* ball;
@@ -73,6 +73,7 @@ private:
     void dirNorm();
 
     //
+    int life_ = 2;
     bool alive_ = true;
 };
 
