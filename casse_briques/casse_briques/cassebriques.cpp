@@ -132,10 +132,24 @@ void CasseBriques::paintGL()
         if (mBricks->empty())
         {
             renderText(700, 400, "Victoire !", font);
+            if(!scoreSet){
+                scoreSet = true;
+                NewScore newScore;
+                newScore.setScore(mBricks->getScore());
+                newScore.exec();
+                addScore(mBricks->getScore(), newScore.getPlayerName());
+            }
         }
         else if(ball.getLife() == 0 && !ball.isAlive())
         {
             renderText(640, 400, "Partie terminée", font);
+            if(!scoreSet){
+                scoreSet = true;
+                NewScore newScore;
+                newScore.setScore(mBricks->getScore());
+                newScore.exec();
+                addScore(mBricks->getScore(), newScore.getPlayerName());
+            }
         }
     }
     else
@@ -453,6 +467,7 @@ void CasseBriques::newGame()
     mBricks = new BrickMap();
     mBricks->autoConstruct();
     ball.setAlive(true);
+    scoreSet = false;
     initBall = true;
     isPlaying = true;
     ball.setLife(2);
@@ -475,7 +490,7 @@ void CasseBriques::addScore(int score, QString playerName)
     it2 = playerNames.begin();
     playerNames.insert(it2 + i, playerName);
 
-    if (scores.size() > maxScores - 1)
+    if (scores.size() > maxScores)
     {
         scores.pop_back();
         playerNames.pop_back();

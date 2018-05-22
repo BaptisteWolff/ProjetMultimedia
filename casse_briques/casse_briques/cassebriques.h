@@ -18,6 +18,7 @@
 #include <vector>
 #include <QTimer>
 #include<QFont>
+#include "newscore.h"
 
 #include"camwindow.h"
 #include"detectmotion.h"
@@ -89,12 +90,13 @@ private:
     void newGame();
 
     // scores
-    int maxScores = 10;
+    int maxScores = 14;
     std::vector<int> scores;
     std::vector<QString> playerNames;
     void addScore(int score, QString playerName);
     void displayScores();
     Wall scoresWall;
+    bool scoreSet = false;
 
 private slots:
     void webcamCapture();
