@@ -8,6 +8,7 @@ namespace Ui {
 class NewScore;
 }
 
+/* Author : Baptiste WOLFF */
 class NewScore : public QDialog
 {
     Q_OBJECT
@@ -15,7 +16,6 @@ class NewScore : public QDialog
 public:
     explicit NewScore(QWidget *parent = 0);
     ~NewScore();
-    //void setCasseBriques(CasseBriques *casseBriques){casseBriques_ = casseBriques;}
     void setScore(int score);
     QString getPlayerName();
 
@@ -24,7 +24,6 @@ private slots:
 
 private:
     Ui::NewScore *ui;
-    //CasseBriques *casseBriques_;
     int score_;
 };
 

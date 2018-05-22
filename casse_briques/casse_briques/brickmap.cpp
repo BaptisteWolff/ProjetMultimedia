@@ -33,9 +33,53 @@ void BrickMap::autoConstruct(){
         if (c_brick != depth)
         {
             QString key = QString::number(d_brick)+","+QString::number(c_brick);
-            Brick* brick1 = new Brick(widthPlot/(-2)+wallWidth+d_brick*(dSizeBrick*1.4)+dSizeBrick/1.4,depthPlot-wallWidth-c_brick*(cSizeBrick+1)-cSizeBrick/2);
-            m_Bricks.insert(std::pair<QString,Brick*>(key,brick1));
-            m_Bricks.at(key)->setSize(dSizeBrick,cSizeBrick,4);
+            int r = 0;
+            switch (level_) {
+            case 2:
+                r = rand() % 100;
+                if (r/(c_brick+1)>10)
+                {
+                    Brick* brick1 = new Brick(widthPlot/(-2)+wallWidth+d_brick*(dSizeBrick*1.4)+dSizeBrick/1.4,depthPlot-wallWidth-c_brick*(cSizeBrick+1)-cSizeBrick/2);
+                    r = rand() % 100;
+                    if (r > 60)
+                    {
+                        brick1->setScore(3);
+                        brick1->setRGB(255,0,0);
+                    }
+                    else if(r > 20)
+                    {
+                        brick1->setScore(2);
+                        brick1->setRGB(255,255,0);
+                    }
+                    m_Bricks.insert(std::pair<QString,Brick*>(key,brick1));
+                    m_Bricks.at(key)->setSize(dSizeBrick,cSizeBrick,4);
+                }
+                break;
+            case 3:
+                if(c_brick == 6 && d_brick == 5)
+                {
+                    Brick* brick1 = new Brick(widthPlot/(-2)+wallWidth+d_brick*(dSizeBrick*1.4)+dSizeBrick/1.4,depthPlot-wallWidth-c_brick*(cSizeBrick+1)-cSizeBrick/2);
+                    m_Bricks.insert(std::pair<QString,Brick*>(key,brick1));
+                    m_Bricks.at(key)->setSize(dSizeBrick,cSizeBrick,4);
+                }
+                break;
+
+            default:
+                Brick* brick1 = new Brick(widthPlot/(-2)+wallWidth+d_brick*(dSizeBrick*1.4)+dSizeBrick/1.4,depthPlot-wallWidth-c_brick*(cSizeBrick+1)-cSizeBrick/2);
+                if (c_brick == 0)
+                {
+                    brick1->setScore(3);
+                    brick1->setRGB(255,0,0);
+                }
+                else if(c_brick == 1)
+                {
+                    brick1->setScore(2);
+                    brick1->setRGB(255,255,0);
+                }
+                m_Bricks.insert(std::pair<QString,Brick*>(key,brick1));
+                m_Bricks.at(key)->setSize(dSizeBrick,cSizeBrick,4);
+                break;
+            }
             d_brick++;
         }
     }

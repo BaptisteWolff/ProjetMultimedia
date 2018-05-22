@@ -27,6 +27,7 @@
 using namespace cv;
 using namespace std;
 // Classe dediee a l'affichage d'une scene OpenGL
+/* Authors : Thomas Mion, Baptiste Wolff */
 class CasseBriques : public QGLWidget
 {
     Q_OBJECT

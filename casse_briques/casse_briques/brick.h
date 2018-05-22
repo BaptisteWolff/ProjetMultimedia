@@ -15,6 +15,7 @@
 
 using namespace std;
 
+/* Authors : Thomas Mion, Baptiste Wolff */
 class Brick
 {
 public:
@@ -39,6 +40,7 @@ public:
     void setTexture(string m_Name);
     void setXY(float x, float y);
     void setScore(int score){score_ = score;}
+    void setRGB(float r, float g, float b){this->r = r; this->g = g; this->b = b;}
     int getScore(){return score_;}
     // Permet de tester si la balle touche la brique et donne la direction x,y de la balle
     cv::Point2f getDir(Ball ball);

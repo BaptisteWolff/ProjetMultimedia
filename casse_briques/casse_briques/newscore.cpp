@@ -21,7 +21,6 @@ void NewScore::setScore(int score)
 
 void NewScore::on_pushButton_released()
 {
-    //casseBriques_->addScore(score_, ui->lineEdit->text());
     this->hide();
 }
 

@@ -45,6 +45,8 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeUpdate()));
     timer->setInterval(1000/fps);
+    ball = Ball(0,-5,40/fps,0,-1);
+    setInitBall();
     //timer->start();
 
 
@@ -60,9 +62,7 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     timerWebcam->start();
     // Detect motion
     detectMotion = DetectMotion(width, height);
-    webCam_->release();
-    ball = Ball(0,-5,20/fps,0,-1);
-    setInitBall();
+    webCam_->release();    
 
     font = QFont("Times", 30, QFont::Bold);
 }
@@ -138,6 +138,8 @@ void CasseBriques::paintGL()
                 newScore.setScore(mBricks->getScore());
                 newScore.exec();
                 addScore(mBricks->getScore(), newScore.getPlayerName());
+                ball.setLife(0);
+                ball.setAlive(false);
             }
         }
         else if(ball.getLife() == 0 && !ball.isAlive())
@@ -217,11 +219,15 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 
         case Qt::Key_Space:
         {
-            if(timer->isActive())
+            /*if(timer->isActive())
             {
-                //timer->stop();
+                timer->stop();
             }
             else
+            {
+                timer->start();
+            }*/
+            if(initBall)
             {
                 timer->start();
             }
@@ -465,7 +471,16 @@ void CasseBriques::webcamCapture()
 void CasseBriques::newGame()
 {
     mBricks = new BrickMap();
+    mBricks->setLevel(level);
     mBricks->autoConstruct();
+    if(level == 2)
+    {
+        ball.changeSpeed(80/fps);
+    }
+    else
+    {
+        ball.changeSpeed(40/fps);
+    }
     ball.setAlive(true);
     scoreSet = false;
     initBall = true;

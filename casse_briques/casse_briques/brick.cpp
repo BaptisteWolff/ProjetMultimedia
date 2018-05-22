@@ -42,7 +42,7 @@ void Brick::drawnBrick()
     float sizeCenterX_ = sizeX_/2;
     float sizeCenterY_ = sizeY_/2;
     float sizeCenterZ_ = sizeZ_/2;
-    glColor3f(r,g,b); // Définiton de la couleur (RVB) du polygone  (ici en vert)|
+    glColor3f(r,g,b); // Définiton de la couleur (RVB) du polygone
     if (texture==true){
             glEnable(GL_TEXTURE_2D);
             glBindTexture(GL_TEXTURE_2D, m_TextureID);

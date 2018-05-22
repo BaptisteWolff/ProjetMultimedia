@@ -7,7 +7,9 @@
 #include <QVector2D>
 #include <opencv2/core.hpp>
 #include <math.h>
+#include <stdlib.h>     /* srand, rand */
 
+/* Authors : Thomas Mion, Baptiste Wolff */
 class BrickMap
 {
 private:
@@ -22,6 +24,7 @@ private:
     int widthPlot = 100;
     int depthPlot = 28;
     int score_ = 0;
+    int level_ = 1;
 public:
     BrickMap();
     BrickMap(int nbx, int nby);
@@ -41,6 +44,7 @@ public:
     cv::Point2f getDir(Ball ball);
 
     int getScore(){return score_;}
+    void setLevel(int level){level_ = level;}
 };
 
 #endif // BRICKMAP_H

@@ -9,7 +9,7 @@
 
 using namespace cv;
 using namespace std;
-
+/* Author : Thomas Mion */
 class DetectMotion
 {
 public:

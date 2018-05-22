@@ -6,6 +6,7 @@
 #include <math.h>
 #include "ball.h"
 
+/* Author : Baptiste WOLFF */
 class Palet
 {
 public:

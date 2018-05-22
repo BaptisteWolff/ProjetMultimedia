@@ -12,6 +12,7 @@
 
 using namespace std;
 
+/* Authors : Thomas Mion, Baptiste Wolff */
 class Ball
 {
 public:
@@ -30,9 +31,9 @@ public:
     void changeDirection(float xDirection, float yDirection){xdirection_=xDirection;ydirection_ = yDirection;dirNorm();}
     void changeDirection(cv::Point2f dir);
     // Permet de changer la speed de la balle
-    void changeSpeed(int newSpeed){speed_ = newSpeed;}
+    void changeSpeed(float newSpeed){speed_ = newSpeed;}
     // Permet de changer la taille de la balle
-    void changeSpeed(float newsizeball){sizeball = newsizeball;}
+    void changeSize(float newsizeball){sizeball = newsizeball;}
     // Permet d'avoir l'emplacement actuel de la balle :
     float getX(){return x_;}
     float getY(){return y_;}

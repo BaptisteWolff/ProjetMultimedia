@@ -5,6 +5,7 @@
 #include "opencv2/opencv.hpp"
 using namespace cv;
 namespace Ui {
+/* Author : Thomas Mion */
 class CamWindow;
 }
 
