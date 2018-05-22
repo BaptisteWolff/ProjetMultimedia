@@ -34,7 +34,8 @@ SOURCES	+= main.cpp \
     brick.cpp \
     wall.cpp \
     brickmap.cpp \
-    detectmotion.cpp
+    detectmotion.cpp \
+    camwindow.cpp
 
 HEADERS += \
     cassebriques.h \
@@ -43,6 +44,10 @@ HEADERS += \
     wall.h \
     ball.h \
     brickmap.h \
-    detectmotion.h
+    detectmotion.h \
+    camwindow.h
 
 RESOURCES     = textures.qrc
+
+FORMS += \
+    camwindow.ui

@@ -18,6 +18,7 @@
 #include <QTimer>
 #include<QFont>
 
+#include"camwindow.h"
 #include"detectmotion.h"
 
 using namespace cv;
@@ -65,7 +66,7 @@ private:
     DetectMotion detectMotion;
     bool isFirstFrame = true;
     bool cam = false;
-
+    CamWindow camwindow;
     bool initBall = true;
     void setInitBall();
     void updateInit();
