@@ -8,29 +8,7 @@ const unsigned int WIN_WIDTH  = 1600;
 const unsigned int WIN_HEIGHT = 900;
 const float MAX_DIMENSION     = 50.0f;
 
-bool triangle = true;
-bool primitive = true;
-float r1 = 0.6;
-float g1 = 0;
-float b1 = 0.8;
 
-float r2 = 0.1;
-float g2 = 0.15;
-float b2 = 0.2;
-
-float r3 = 0.1;
-float g3 = 0.9;
-float b3 = 0.2;
-
-float r4 = 0.1;
-float g4 = 0.1;
-float b4 = 0.2;
-
-GLfloat X = 0;
-GLfloat Y = 0;
-GLfloat Z = 0;
-
-GLfloat angle = 0;
 
 
 // Constructeur
@@ -123,29 +101,59 @@ void CasseBriques::paintGL()
     glLoadIdentity();
     gluLookAt(0.0f, 0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
-    // Debut de l'affichage
-    mBricks->drawnBricks();
-    palet.draw();
-    ball.drawnBall();
-    upperWall.draw();
-    lowerWall.draw();
-    rightWall.draw();
-    leftWall.draw();
+    if (isPlaying)
+    {
+        // Debut de l'affichage
+        mBricks->drawnBricks();
+        palet.draw();
+        ball.drawnBall();
+        upperWall.draw();
+        lowerWall.draw();
+        rightWall.draw();
+        leftWall.draw();
 
-    // Affichage du texte
-    glColor3f(1.0, 1.0, 1.0);
-    // vies
-    renderText(10, 40, "Vies : " + QString::number(ball.getLife()), font);
-    // score
-    renderText(1300, 40, "Score : " + QString::number(mBricks->getScore()), font);
-    // Fin de partie
-    if (mBricks->empty())
-    {
-        renderText(700, 400, "Victoire !", font);
+        // Affichage du texte
+        glColor3f(1.0, 1.0, 1.0);
+        // vies
+        renderText(10, 40, "Vies : " + QString::number(ball.getLife()), font);
+        // score
+        renderText(1300, 40, "Score : " + QString::number(mBricks->getScore()), font);
+        // Fin de partie
+        if (mBricks->empty())
+        {
+            renderText(700, 400, "Victoire !", font);
+        }
+        else if(ball.getLife() == 0 && !ball.isAlive())
+        {
+            renderText(640, 400, "Partie terminée", font);
+        }
     }
-    else if(ball.getLife() == 0 && !ball.isAlive())
+    else
     {
-        renderText(640, 400, "Partie terminée", font);
+        // Affichage du texte
+        glColor3f(1.0, 1.0, 1.0);
+        renderText(550, 200, "Reprendre partie", font);
+        renderText(550, 300, "Nouvelle partie", font);
+        renderText(550, 400, "Scores", font);
+        renderText(550, 500, "Choisir niveau", font);
+
+         glColor3f(1.0, 1.0, 0);
+        switch (optionSelected) {
+        case 0:
+            renderText(550, 200, "Reprendre partie", font);
+            break;
+        case 1:
+            renderText(550, 300, "Nouvelle partie", font);
+            break;
+        case 2:
+            renderText(550, 400, "Scores", font);
+            break;
+        case 3:
+            renderText(550, 500, "Choisir niveau", font);
+            break;
+        default:
+            break;
+        }
     }
 }
 
@@ -153,99 +161,144 @@ void CasseBriques::paintGL()
 // Fonction de gestion d'interactions clavier
 void CasseBriques::keyPressEvent(QKeyEvent * event)
 {
-    switch(event->key())
+    if(isPlaying)
     {
-    case Qt::Key_B:
-    {
-        ball.moveBall();
-        //break;
-    }
-
-    case Qt::Key_R:
-
-    {
-    }
-
-        // Affichage/Masquage de l'objet
-    case Qt::Key_H:
-    {
-        primitive = !primitive;
-        break;
-    }
-
-        // Changement de l'objet a afficher
-    case Qt::Key_Space:
-    {
-        if(timer->isActive())
+        switch(event->key())
         {
+        case Qt::Key_Escape:
+        {
+            isPlaying = false;
             timer->stop();
+            break;
         }
-        else
+
+        case Qt::Key_Space:
         {
-            timer->start();
+            if(timer->isActive())
+            {
+                //timer->stop();
+            }
+            else
+            {
+                timer->start();
+            }
+            break;
         }
-        break;
-    }
 
-        // Sortie de l'application
-    case Qt::Key_Escape:
-    {
-        break;
-    }
-
-    case Qt::Key_Up:
-    {
-        if(!timer->isActive())
+        case Qt::Key_Up:
         {
-            timeUpdate();
+            /*if(!timer->isActive())
+            {
+                timeUpdate();
+            }*/
+            break;
         }
-        break;
-    }
 
-    case Qt::Key_Down:
-    {
-        break;
-    }
-
-    case Qt::Key_Left:
-    {
-        float x = palet.getX();
-        x -= 1;
-        palet.setX(x);
-        break;
-    }
-
-    case Qt::Key_Right:
-    {
-        float x = palet.getX();
-        x += 1;
-        palet.setX(x);
-        break;
-    }
-
-    case Qt::Key_C:
-    {
-        cam =!cam;
-        if (cam){
-            webCam_=new VideoCapture(0);
-        }else{
-            webCam_->release();
+        case Qt::Key_Left:
+        {
+            float x = palet.getX();
+            x -= 1;
+            palet.setX(x);
+            break;
         }
-        break;
+
+        case Qt::Key_Right:
+        {
+            float x = palet.getX();
+            x += 1;
+            palet.setX(x);
+            break;
+        }
+
+        case Qt::Key_C:
+        {
+            cam =!cam;
+            if (cam){
+                webCam_=new VideoCapture(0);
+            }else{
+                webCam_->release();
+            }
+            break;
+        }
+
+            // Cas par defaut
+        default:
+        {
+            // Ignorer l'evenement
+            event->ignore();
+            return;
+        }
+        }
+
+        updateInit();
     }
+    else
+    {
+        switch(event->key())
+        {
+        case Qt::Key_Escape:
+        {
+           isPlaying = true;
+           if (!initBall)
+           {
+               timer->start();
+           }
+           break;
+        }
+
+
+        case Qt::Key_Down:
+        {
+            optionSelected++;
+            if(optionSelected > 3)
+            {
+                optionSelected = 0;
+            }
+            break;
+        }
+
+        case Qt::Key_Up:
+        {
+            optionSelected--;
+            if(optionSelected < 0)
+            {
+                optionSelected = 3;
+            }
+            break;
+        }
+
+        case Qt::Key_Return:
+        {
+            //qDebug() << optionSelected;
+            switch(optionSelected)
+            case (0):
+            {
+                isPlaying = true;
+                if (!initBall)
+                {
+                    timer->start();
+                }
+                break;
+            }
+
+            break;
+        }
 
         // Cas par defaut
-    default:
-    {
-        // Ignorer l'evenement
-        event->ignore();
-        return;
-    }
+        default:
+        {
+            // Ignorer l'evenement
+            event->ignore();
+            return;
+        }
+
+        }
     }
 
     // Acceptation de l'evenement
     event->accept();
-    updateInit();
+    updateGL();
+
 }
 
 void CasseBriques::timeUpdate()

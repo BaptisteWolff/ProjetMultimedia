@@ -70,6 +70,15 @@ private:
     void setInitBall();
     void updateInit();
 
+    bool isPlaying = false;
+
+    /* 0 : reprendre partie
+     * 1 : nouvelle partie
+     * 2 : afficher scores
+     * 3 : choisir niveau
+     * */
+    int optionSelected = 0;
+
     QFont font;
 private slots:
     void webcamCapture();
