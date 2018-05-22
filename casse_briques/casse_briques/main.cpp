@@ -13,7 +13,6 @@ int main(int argc, char *argv[])
 	// Creation du widget opengl
     CasseBriques glWidget;
     glWidget.show();
-
     // Execution de l'application QT
     return app.exec();
 }

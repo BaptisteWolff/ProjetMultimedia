@@ -39,7 +39,6 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     // Reglage de la taille/position
     setFixedSize(WIN_WIDTH, WIN_HEIGHT);
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-
     float wallWidth = 2;
     cv::Point2f p1(0, 28);
     cv::Point2f p2(50, 0);
@@ -232,8 +231,10 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
         cam =!cam;
         if (cam){
             webCam_=new VideoCapture(0);
+            camwindow.show();
         }else{
             webCam_->release();
+            camwindow.hide();
         }
         break;
     }
@@ -318,12 +319,13 @@ void CasseBriques::webcamCapture()
             detectMotion.detect(image);
             // Sphere translation
             Point vect = detectMotion.getVect();
-            if (vect.x >2 || vect.x<-2)
+            if (vect.x >5 || vect.x<-5)
             {
                 float x = palet.getX();
-                x += vect.x/10;
+                x += vect.x/3;
                 palet.setX(x);
             }
+            camwindow.webcamCapture(image);
         }
         else
         {}
