@@ -80,7 +80,7 @@ private:
      * */
     int optionSelected = 0;
 
-    int level;
+    int level = 1;
 
     QFont font;
 

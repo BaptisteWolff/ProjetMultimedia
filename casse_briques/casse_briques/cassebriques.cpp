@@ -149,6 +149,24 @@ void CasseBriques::paintGL()
             break;
         case 3:
             renderText(550, 500, "Choisir niveau", font);
+            glColor3f(1.0, 1.0, 1.0);
+            renderText(550, 600, "1", font);
+            renderText(650, 600, "2", font);
+            renderText(750, 600, "3", font);
+            glColor3f(1.0, 1.0, 0);
+            switch (level) {
+            case 1:
+                renderText(550, 600, "1", font);
+                break;
+            case 2:
+                renderText(650, 600, "2", font);
+                break;
+            case 3:
+                renderText(750, 600, "3", font);
+                break;
+            default:
+                break;
+            }
             break;
         default:
             break;
@@ -264,6 +282,32 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
             if(optionSelected < 0)
             {
                 optionSelected = 3;
+            }
+            break;
+        }
+
+        case Qt::Key_Left:
+        {
+            if (optionSelected == 3)
+            {
+                level--;
+                if (level < 1)
+                {
+                    level = 3;
+                }
+            }
+            break;
+        }
+
+        case Qt::Key_Right:
+        {
+            if (optionSelected == 3)
+            {
+                level++;
+                if (level > 3)
+                {
+                    level = 1;
+                }
             }
             break;
         }
@@ -396,8 +440,10 @@ void CasseBriques::newGame()
 {
     mBricks = new BrickMap();
     mBricks->autoConstruct();
+    ball.setAlive(true);
     initBall = true;
     isPlaying = true;
+    ball.setLife(2);
     setInitBall();
     updateInit();
 }
