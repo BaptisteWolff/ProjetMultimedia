@@ -15,11 +15,13 @@
 #include "wall.h"
 #include "opencv2/opencv.hpp"
 #include <iostream>
+#include <vector>
 #include <QTimer>
 #include<QFont>
 
 #include"camwindow.h"
 #include"detectmotion.h"
+
 
 using namespace cv;
 using namespace std;
@@ -85,6 +87,15 @@ private:
     QFont font;
 
     void newGame();
+
+    // scores
+    int maxScores = 10;
+    std::vector<int> scores;
+    std::vector<QString> playerNames;
+    void addScore(int score, QString playerName);
+    void displayScores();
+    Wall scoresWall;
+
 private slots:
     void webcamCapture();
     void timeUpdate();

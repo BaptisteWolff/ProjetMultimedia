@@ -4,6 +4,7 @@
 #include <opencv2/core.hpp>
 #include "ball.h"
 
+/* Author : Baptiste WOLFF */
 class Wall
 {
 public:

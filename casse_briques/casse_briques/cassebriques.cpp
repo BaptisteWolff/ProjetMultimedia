@@ -17,17 +17,27 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     // Reglage de la taille/position
     setFixedSize(WIN_WIDTH, WIN_HEIGHT);
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
+    mBricks->autoConstruct();
+
+    // murs
     float wallWidth = 2;
     cv::Point2f p1(0, 28);
     cv::Point2f p2(50, 0);
     cv::Point2f p3(0, -28);
     cv::Point2f p4(-50, 0);
-    mBricks->autoConstruct();
     upperWall = Wall(p1, 100, wallWidth);
     rightWall = Wall(p2, wallWidth, 56);
     lowerWall = Wall(p3, 100, wallWidth);
     leftWall = Wall(p4, wallWidth, 56);
     lowerWall.setRGB(0, 255, 0);
+
+    // scores
+    /*addScore(100, "toto");
+    addScore(200, "JeanJean");
+    addScore(150, "LeNomUnPeuLong");*/
+    cv::Point2f ps(14, 0);
+    scoresWall = Wall(ps, 0.5, 50);
+    scoresWall.setRGB(255,255,255);
 
     QScreen *screen = QApplication::screens().at(0);
     fps = screen->refreshRate();
@@ -147,6 +157,7 @@ void CasseBriques::paintGL()
             break;
         case 2:
             renderText(550, 400, "Scores", font);
+            displayScores();
             break;
         case 3:
             renderText(550, 500, "Choisir niveau", font);
@@ -367,8 +378,8 @@ void CasseBriques::updateBall()
         ball.changeDirection(upperWall.getDir(ball));
         ball.changeDirection(rightWall.getDir(ball));
         ball.changeDirection(leftWall.getDir(ball));
-        //ball = mBricks->changeDirection(ball);
-        ball.changeDirection(mBricks->getDir(ball));
+        ball = mBricks->changeDirection(ball);
+        //ball.changeDirection(mBricks->getDir(ball));
         ball.setAlive(!lowerWall.isTouching(ball));
     }
 
@@ -447,4 +458,38 @@ void CasseBriques::newGame()
     ball.setLife(2);
     setInitBall();
     updateInit();
+}
+
+void CasseBriques::addScore(int score, QString playerName)
+{
+    int i = 0;
+    while(i < scores.size())
+    {
+        if(score > scores[i]){break;}
+        i++;
+    }
+    std::vector<int>::iterator it;
+    it = scores.begin();
+    scores.insert(it+i, score);
+    std::vector<QString>::iterator it2;
+    it2 = playerNames.begin();
+    playerNames.insert(it2 + i, playerName);
+
+    if (scores.size() > maxScores - 1)
+    {
+        scores.pop_back();
+        playerNames.pop_back();
+    }
+}
+
+void CasseBriques::displayScores()
+{
+    scoresWall.draw();
+    glColor3f(1.0, 1.0, 1.0);
+    for (int i = 0; i < scores.size(); i++)
+    {
+        int y = i * 50 + 100;
+        renderText(1050, y, QString::number(scores[i]), font);
+        renderText(1150, y, playerNames[i], font);
+    }
 }

@@ -72,8 +72,10 @@ bool BrickMap::empty(){
 
 Ball BrickMap::changeDirection(Ball ball)
 {
-    /*float dirX = ball.getXDir();
+    float dirX = ball.getXDir();
     float dirY = ball.getYDir();
+
+    bool alreadyChanged = false;
 
     c_brick = 0;
     d_brick = 0;
@@ -88,17 +90,22 @@ Ball BrickMap::changeDirection(Ball ball)
         if (c_brick != depth)
         {
             QString key = QString::number(d_brick)+","+QString::number(c_brick);
-            Brick *brick = m_Bricks.at(key);
-            ball.changeDirection(brick->getDir(ball));
-            if (dirX != ball.getXDir() || dirY != ball.getYDir())
+            if (m_Bricks.count(key) == 1)
             {
-                break;
+                Brick *brick = m_Bricks.at(key);
+                ball.changeDirection(brick->getDir(ball));
+                if (dirX != ball.getXDir() || dirY != ball.getYDir())
+                {
+                    score_ += brick->getScore();
+                    m_Bricks.erase(key);
+                    break;
+                }
             }
             d_brick++;
         }
     }
 
-    return ball;*/
+    return ball;
 }
 
 cv::Point2f BrickMap::getDir(Ball ball)
