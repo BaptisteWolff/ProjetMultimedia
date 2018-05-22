@@ -134,9 +134,19 @@ void CasseBriques::paintGL()
 
     // Affichage du texte
     glColor3f(1.0, 1.0, 1.0);
-    renderText(10, 40, /*QStringLiteral(*/"Vies : " + QString::number(ball.getLife() + 1), font);
-
-
+    // vies
+    renderText(10, 40, "Vies : " + QString::number(ball.getLife()), font);
+    // score
+    renderText(1300, 40, "Score : " + QString::number(mBricks->getScore()), font);
+    // Fin de partie
+    if (mBricks->empty())
+    {
+        renderText(700, 400, "Victoire !", font);
+    }
+    else if(ball.getLife() == 0 && !ball.isAlive())
+    {
+        renderText(640, 400, "Partie terminée", font);
+    }
 }
 
 
@@ -145,33 +155,15 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 {
     switch(event->key())
     {
-    // Changement de couleur du fond
     case Qt::Key_B:
     {
         ball.moveBall();
-        break;
+        //break;
     }
 
-        // Changement de couleur de l'objet
     case Qt::Key_R:
 
     {
-        r1 = rand() / (float)RAND_MAX;
-        g1 = rand() / (float)RAND_MAX;
-        b1 = rand() / (float)RAND_MAX;
-
-        r2 = rand() / (float)RAND_MAX;
-        g2 = rand() / (float)RAND_MAX;
-        b2 = rand() / (float)RAND_MAX;
-
-        r3 = rand() / (float)RAND_MAX;
-        g3 = rand() / (float)RAND_MAX;
-        b3 = rand() / (float)RAND_MAX;
-
-        r4 = rand() / (float)RAND_MAX;
-        g4 = rand() / (float)RAND_MAX;
-        b4 = rand() / (float)RAND_MAX;
-        break;
     }
 
         // Affichage/Masquage de l'objet
@@ -253,18 +245,7 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 
     // Acceptation de l'evenement
     event->accept();
-    if (!timer->isActive())
-    {
-        if(initBall)
-        {
-            setInitBall();
-        }
-        updateGL();
-    }
-    else
-    {
-        initBall = false;
-    }
+    updateInit();
 }
 
 void CasseBriques::timeUpdate()
@@ -289,11 +270,27 @@ void CasseBriques::updateBall()
     if(!ball.isAlive() && ball.getLife() > 0)
     {
         timer->stop();
-        setInitBall();
         ball.removeLife();
+        setInitBall();
         ball.setAlive(true);
 
         initBall = true;
+    }
+}
+
+void CasseBriques::updateInit()
+{
+    if (!timer->isActive())
+    {
+        if(initBall)
+        {
+            setInitBall();
+        }
+        updateGL();
+    }
+    else
+    {
+        initBall = false;
     }
 }
 

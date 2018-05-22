@@ -68,8 +68,7 @@ private:
 
     bool initBall = true;
     void setInitBall();
-
-    int score = 0;
+    void updateInit();
 
     QFont font;
 private slots:
