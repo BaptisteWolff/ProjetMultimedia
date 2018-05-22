@@ -16,7 +16,6 @@
 #include "opencv2/opencv.hpp"
 #include <iostream>
 #include <QTimer>
-#include<QFont>
 
 #include"camwindow.h"
 #include"detectmotion.h"
@@ -52,12 +51,12 @@ private:
     Palet palet;
     GLfloat xPalet = 0; // Position du palet
     Ball ball = Ball(0,1,20/fps,0,-1);
-
+    /*Ball ball2 = Ball(3,1,20/fps,0,-1);
+    Ball ball3 = Ball(-3,1,20/fps,0,-1);*/
     Wall upperWall;
     Wall rightWall;
     Wall leftWall;
     Wall lowerWall;
-
     void updateBall();
     BrickMap* mBricks = new BrickMap();
     QTimer *timer;
@@ -69,13 +68,9 @@ private:
     CamWindow camwindow;
     bool initBall = true;
     void setInitBall();
-    void updateInit();
-
-    QFont font;
 private slots:
     void webcamCapture();
     void timeUpdate();
 };
-
 
 #endif // MYGLWIDGET_H

@@ -74,8 +74,8 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     detectMotion = DetectMotion(width, height);
     ball = Ball(0,-5,20/fps,0,-1);
     setInitBall();
-
-    font = QFont("Times", 30, QFont::Bold);
+    /*ball2 = Ball(3,-5,20/fps,0,-1);
+    ball3 = Ball(-3,-5,20/fps,0,-1);*/
 }
 
 
@@ -126,26 +126,12 @@ void CasseBriques::paintGL()
     mBricks->drawnBricks();
     palet.draw();
     ball.drawnBall();
+    /*ball2.drawnBall();
+    ball3.drawnBall();*/
     upperWall.draw();
     lowerWall.draw();
     rightWall.draw();
     leftWall.draw();
-
-    // Affichage du texte
-    glColor3f(1.0, 1.0, 1.0);
-    // vies
-    renderText(10, 40, "Vies : " + QString::number(ball.getLife()), font);
-    // score
-    renderText(1300, 40, "Score : " + QString::number(mBricks->getScore()), font);
-    // Fin de partie
-    if (mBricks->empty())
-    {
-        renderText(700, 400, "Victoire !", font);
-    }
-    else if(ball.getLife() == 0 && !ball.isAlive())
-    {
-        renderText(640, 400, "Partie terminée", font);
-    }
 }
 
 
@@ -154,15 +140,33 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 {
     switch(event->key())
     {
+    // Changement de couleur du fond
     case Qt::Key_B:
     {
         ball.moveBall();
-        //break;
+        break;
     }
 
+        // Changement de couleur de l'objet
     case Qt::Key_R:
 
     {
+        r1 = rand() / (float)RAND_MAX;
+        g1 = rand() / (float)RAND_MAX;
+        b1 = rand() / (float)RAND_MAX;
+
+        r2 = rand() / (float)RAND_MAX;
+        g2 = rand() / (float)RAND_MAX;
+        b2 = rand() / (float)RAND_MAX;
+
+        r3 = rand() / (float)RAND_MAX;
+        g3 = rand() / (float)RAND_MAX;
+        b3 = rand() / (float)RAND_MAX;
+
+        r4 = rand() / (float)RAND_MAX;
+        g4 = rand() / (float)RAND_MAX;
+        b4 = rand() / (float)RAND_MAX;
+        break;
     }
 
         // Affichage/Masquage de l'objet
@@ -246,12 +250,25 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 
     // Acceptation de l'evenement
     event->accept();
-    updateInit();
+    if (!timer->isActive())
+    {
+        if(initBall)
+        {
+            setInitBall();
+        }
+        updateGL();
+    }
+    else
+    {
+        initBall = false;
+    }
 }
 
 void CasseBriques::timeUpdate()
 {    
     updateBall();
+    //ball2 = updateBall(ball2);
+    //ball3 = updateBall(ball3);
     updateGL();
 }
 
@@ -271,27 +288,11 @@ void CasseBriques::updateBall()
     if(!ball.isAlive() && ball.getLife() > 0)
     {
         timer->stop();
-        ball.removeLife();
         setInitBall();
+        ball.removeLife();
         ball.setAlive(true);
 
         initBall = true;
-    }
-}
-
-void CasseBriques::updateInit()
-{
-    if (!timer->isActive())
-    {
-        if(initBall)
-        {
-            setInitBall();
-        }
-        updateGL();
-    }
-    else
-    {
-        initBall = false;
     }
 }
 
