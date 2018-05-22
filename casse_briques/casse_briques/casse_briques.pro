@@ -20,7 +20,7 @@ win32 {
     }
 }
 else {
-	LIBS     += -lGL -lGLU
+        LIBS     += -lGL -lGLU
 }
 
 # nom de l'exe genere
