@@ -75,8 +75,8 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     detectMotion = DetectMotion(width, height);
     ball = Ball(0,-5,20/fps,0,-1);
     setInitBall();
-    /*ball2 = Ball(3,-5,20/fps,0,-1);
-    ball3 = Ball(-3,-5,20/fps,0,-1);*/
+
+    font = QFont("Times", 30, QFont::Bold);
 }
 
 
@@ -127,12 +127,16 @@ void CasseBriques::paintGL()
     mBricks->drawnBricks();
     palet.draw();
     ball.drawnBall();
-    /*ball2.drawnBall();
-    ball3.drawnBall();*/
     upperWall.draw();
     lowerWall.draw();
     rightWall.draw();
     leftWall.draw();
+
+    // Affichage du texte
+    glColor3f(1.0, 1.0, 1.0);
+    renderText(10, 40, /*QStringLiteral(*/"Vies : " + QString::number(ball.getLife() + 1), font);
+
+
 }
 
 
@@ -266,8 +270,6 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 void CasseBriques::timeUpdate()
 {    
     updateBall();
-    //ball2 = updateBall(ball2);
-    //ball3 = updateBall(ball3);
     updateGL();
 }
 

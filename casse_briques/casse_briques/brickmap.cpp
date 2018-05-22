@@ -146,7 +146,6 @@ cv::Point2f BrickMap::getDir(Ball ball)
         Brick *brick = m_Bricks.at(key);
 
         dir = brick->getDir(ball);
-        delete brick;
 
         if (dir.x != ball.getXDir() || dir.y != ball.getYDir())
         {
