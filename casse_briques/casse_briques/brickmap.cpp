@@ -14,8 +14,12 @@ BrickMap::BrickMap(int nbx, int nby)
     m_Bricks.clear();
 }
 void BrickMap::autoSizeBrick(){
+    /*
     dSizeBrick=(widthPlot-2*wallWidth)/11;
     cSizeBrick=(depthPlot-2*wallWidth)/16; //24
+    */
+    dSizeBrick=(widthPlot-2*wallWidth)/18;
+    cSizeBrick=dSizeBrick/3; //24
 }
 void BrickMap::autoConstruct(){
     autoSizeBrick();
