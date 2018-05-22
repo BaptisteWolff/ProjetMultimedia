@@ -320,10 +320,10 @@ void CasseBriques::webcamCapture()
             detectMotion.detect(image);
             // Sphere translation
             Point vect = detectMotion.getVect();
-            if (vect.x > 5 || vect.x<-5)
+            if (vect.x >2 || vect.x<-2)
             {
                 float x = palet.getX();
-                x += vect.x/30;
+                x += vect.x/10;
                 palet.setX(x);
             }
         }

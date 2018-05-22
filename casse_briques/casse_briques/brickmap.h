@@ -26,7 +26,7 @@ public:
     BrickMap(int nbx, int nby);
     void autoSizeBrick();
     void setWallWidth(float newWallWitdth){wallWidth = newWallWitdth;}
-    void setSizeBrick(float dSizeBrick, float cSizeBrick){wallWidth = dSizeBrick;}
+    void setSizeBrick(float dSizeBrick, float cSizeBrick){this->dSizeBrick = dSizeBrick;this->cSizeBrick = cSizeBrick;}
     void drawnBricks();
     void autoConstruct();
     float getMaxColumn() {return (widthPlot/(-2)+wallWidth+(column-1)*(cSizeBrick+1)+cSizeBrick/2);}

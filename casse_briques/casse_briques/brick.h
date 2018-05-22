@@ -40,7 +40,7 @@ public:
     void setXY(float x, float y);
     // Permet de tester si la balle touche la brique et donne la direction x,y de la balle
     cv::Point2f getDir(Ball ball);
-
+    ~Brick();
 private:
     /** Brick **/
         /** Coordonnée **/
