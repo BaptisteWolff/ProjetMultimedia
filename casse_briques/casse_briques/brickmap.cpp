@@ -18,7 +18,7 @@ void BrickMap::autoSizeBrick(){
     dSizeBrick=(widthPlot-2*wallWidth)/11;
     cSizeBrick=(depthPlot-2*wallWidth)/16; //24
     */
-    dSizeBrick=(widthPlot-2*wallWidth)/18;
+    dSizeBrick=(widthPlot-2*wallWidth)/14;
     cSizeBrick=dSizeBrick/3; //24
 }
 void BrickMap::autoConstruct(){
@@ -33,7 +33,7 @@ void BrickMap::autoConstruct(){
         if (c_brick != depth)
         {
             QString key = QString::number(d_brick)+","+QString::number(c_brick);
-            Brick* brick1 = new Brick(widthPlot/(-2)+wallWidth+d_brick*(dSizeBrick+1)+dSizeBrick/2,depthPlot-wallWidth-c_brick*(cSizeBrick+1)-cSizeBrick/2);
+            Brick* brick1 = new Brick(widthPlot/(-2)+wallWidth+d_brick*(dSizeBrick*1.4)+dSizeBrick/1.4,depthPlot-wallWidth-c_brick*(cSizeBrick+1)-cSizeBrick/2);
             m_Bricks.insert(std::pair<QString,Brick*>(key,brick1));
             m_Bricks.at(key)->setSize(dSizeBrick,cSizeBrick,4);
             d_brick++;

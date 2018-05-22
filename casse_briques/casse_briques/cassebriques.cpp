@@ -50,6 +50,7 @@ CasseBriques::CasseBriques(QWidget * parent) : QGLWidget(parent)
     timerWebcam->start();
     // Detect motion
     detectMotion = DetectMotion(width, height);
+    webCam_->release();
     ball = Ball(0,-5,20/fps,0,-1);
     setInitBall();
 
