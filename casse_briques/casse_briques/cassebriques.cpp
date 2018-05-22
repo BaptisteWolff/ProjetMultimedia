@@ -144,7 +144,7 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
     // Changement de couleur du fond
     case Qt::Key_B:
     {
-        ball1.moveBall();
+        ball.moveBall();
         break;
     }
 
@@ -273,7 +273,7 @@ void CasseBriques::timeUpdate()
 
 void CasseBriques::updateBall()
 {
-    if (ball.isAlive()){
+    if (ball.isAlive() && !initBall){
         ball.moveBall();
         ball.changeDirection(palet.getDir(ball));
         ball.changeDirection(upperWall.getDir(ball));
@@ -301,6 +301,7 @@ void CasseBriques::setInitBall()
     ball.setY(palet.getY() + palet.getRadius() + ball.getRadius());
     ball.setXdir(0);
 }
+
 void CasseBriques::webcamCapture()
 {
     if (webCam_->isOpened()) {

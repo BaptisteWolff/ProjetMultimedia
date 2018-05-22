@@ -29,7 +29,14 @@ Ball::Ball(float x, float y, float speed, float xdirection, float ydirection)
 Ball::~Ball()
 {
     // Destruction des quadriques
-    gluDeleteQuadric(ball);
+    try
+    {
+        gluDeleteQuadric(ball);
+    }
+    catch(const std::exception& e)
+    {
+
+    }
 }
 void Ball::drawnBall(){
     // Affichage de la quadrique
