@@ -16,6 +16,10 @@ void Brick::setXY(float x, float y){
     x_=x;
     y_=y;
 }
+// Destructeur :
+Brick::~Brick()
+{
+}
 void Brick::setTexture(string m_Name){
     tex = QGLWidget::convertToGLFormat(QImage(QString(":/bricks/%1").arg(QString::fromStdString(m_Name))));
     glGenTextures(1, &m_TextureID);
