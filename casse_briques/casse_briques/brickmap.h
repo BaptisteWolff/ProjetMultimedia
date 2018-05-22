@@ -21,6 +21,7 @@ private:
     float wallWidth = 2;
     int widthPlot = 100;
     int depthPlot = 28;
+    int score_ = 0;
 public:
     BrickMap();
     BrickMap(int nbx, int nby);
@@ -38,6 +39,8 @@ public:
     Brick* brick(QString key);
     Ball changeDirection(Ball ball);
     cv::Point2f getDir(Ball ball);
+
+    int getScore(){return score_;}
 };
 
 #endif // BRICKMAP_H

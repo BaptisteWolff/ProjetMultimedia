@@ -38,6 +38,8 @@ public:
     // Permet de set la texure :
     void setTexture(string m_Name);
     void setXY(float x, float y);
+    void setScore(int score){score_ = score;}
+    int getScore(){return score_;}
     // Permet de tester si la balle touche la brique et donne la direction x,y de la balle
     cv::Point2f getDir(Ball ball);
     ~Brick();
@@ -64,6 +66,9 @@ private:
     // Identifiant de texture
     GLuint m_TextureID = 0;
     QImage tex;
+
+    /** score **/
+    int score_ = 1;
 
     void setEdges();
 };
