@@ -214,10 +214,11 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
             cam =!cam;
             if (cam){
                 webCam_=new VideoCapture(0);
+                camwindow.show();
             }else{
                 webCam_->release();
+                camwindow.hide();
             }
-            setInitBall();
             break;
         }
 
@@ -269,18 +270,24 @@ void CasseBriques::keyPressEvent(QKeyEvent * event)
 
         case Qt::Key_Return:
         {
-            //qDebug() << optionSelected;
-            switch(optionSelected)
-            case (0):
-            {
+            switch(optionSelected){
+            case 0:
                 isPlaying = true;
                 if (!initBall)
                 {
                     timer->start();
                 }
                 break;
-            }
+            case 1:
+                newGame();
+                break;
+            case 2:
 
+                break;
+            case 3:
+
+                break;
+            }
             break;
         }
 
@@ -375,10 +382,22 @@ void CasseBriques::webcamCapture()
                 float x = palet.getX();
                 x += vect.x/3;
                 palet.setX(x);
+
+                updateInit();
             }
             camwindow.webcamCapture(image);
         }
         else
         {}
     }
+}
+
+void CasseBriques::newGame()
+{
+    mBricks = new BrickMap();
+    mBricks->autoConstruct();
+    initBall = true;
+    isPlaying = true;
+    setInitBall();
+    updateInit();
 }

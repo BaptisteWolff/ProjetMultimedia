@@ -71,7 +71,7 @@ private:
     void setInitBall();
     void updateInit();
 
-    bool isPlaying = false;
+    bool isPlaying = true;
 
     /* 0 : reprendre partie
      * 1 : nouvelle partie
@@ -80,7 +80,11 @@ private:
      * */
     int optionSelected = 0;
 
+    int level;
+
     QFont font;
+
+    void newGame();
 private slots:
     void webcamCapture();
     void timeUpdate();
